@@ -1,0 +1,320 @@
+@charset "utf-8";
+
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: normal;
+    font-family: Roboto Condensed, "Helvetica Neue", Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 40px;
+    line-height: 40px;
+}
+
+h2 {
+    font-size: 30px;
+    line-height: 30px;
+}
+
+h3 {
+    font-size: 25px;
+    line-height: 25px;
+}
+
+h4 {
+    font-size: 20px;
+    line-height: 20px;
+}
+
+h5 {
+    font-size: 15px;
+    line-height: 15px;
+}
+
+h6 {
+    font-size: 12px;
+    line-height: 15px;
+}
+
+h1 span, h2 span, h3 span, h4 span, h5 span, h6 span {
+    color: #fc0;
+}
+
+a, a:hover {
+    text-decoration: none;
+}
+
+a, img {
+    outline: none !important;
+}
+
+a {
+    transition: color linear 0.25s;
+    -ms-transition: color linear 0.25s;
+    -moz-transition: color linear 0.25s;
+    -webkit-transition: color linear 0.25s;
+    -o-transition: color linear 0.25s;
+}
+
+p, a, li, span {
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+select {
+    font-weight: bold;
+}
+
+input {
+    border-radius: 0 !important;
+}
+
+label {
+    font-size: 150%;
+}
+
+html,
+body {
+    height: 100%;
+
+    /* The html and body elements cannot have any padding or margin. */
+}
+
+body {
+    background: #fff;
+    font: normal 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+    color: #444;
+}
+
+
+
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    max-width: none !important;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by its height */
+    margin: 0 auto -60px;
+    /* Pad bottom by footer height */
+    padding: 0 0 80px;
+
+}
+
+/* Reset the container */
+.container {
+    max-width: none !important;
+    width: 1000px;
+    margin: auto;
+}
+
+/* Header */
+
+.container .navbar-header,
+.container .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.header .container {
+    background: #ececed;
+}
+
+/* Always float the navbar header */
+.navbar-header {
+    float: left;
+}
+
+/* Undo the collapsing navbar */
+.navbar-collapse {
+    display: block !important;
+    height: auto !important;
+    padding-bottom: 0;
+    overflow: visible !important;
+
+}
+
+.navbar-toggle {
+    display: none;
+}
+
+.navbar-brand {
+    margin-left: -15px;
+}
+
+/* Always apply the floated nav */
+.navbar-nav {
+    float: left;
+    margin: 0;
+}
+
+.navbar-nav > li {
+    float: left;
+}
+
+.navbar-nav > li > a {
+    padding: 15px;
+}
+
+/* Redeclare since we override the float above */
+.navbar-nav.navbar-right {
+    float: right;
+}
+
+/* Undo custom dropdowns */
+.navbar .open .dropdown-menu {
+    position: absolute;
+    float: left;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid #000;
+    border-width: 0 1px 1px;
+    border-radius: 0 0 4px 4px;
+    -webkit-box-shadow: 0 6px 12px #000;
+    box-shadow: 0 6px 12px #000;
+}
+
+.navbar .open .dropdown-menu > li > a {
+    color: #333;
+}
+
+.navbar .open .dropdown-menu > li > a:hover,
+.navbar .open .dropdown-menu > li > a:focus,
+.navbar .open .dropdown-menu > .active > a,
+.navbar .open .dropdown-menu > .active > a:hover,
+.navbar .open .dropdown-menu > .active > a:focus {
+    color: #fff !important;
+    background-color: #428bca !important;
+}
+
+.navbar .open .dropdown-menu > .disabled > a,
+.navbar .open .dropdown-menu > .disabled > a:hover,
+.navbar .open .dropdown-menu > .disabled > a:focus {
+    color: #999 !important;
+    background-color: transparent !important;
+}
+
+
+.header {
+    background: #ececed;
+}
+
+.header .nav li a {
+    border-radius: 0;
+    border-right: 1px solid #dcdcdc;
+    color: #555;
+    font-weight: bold;
+    font-size: 130%;
+    display: block;
+    transition: all linear 0.25s;
+    -ms-transition: all linear 0.25s;
+    -moz-transition: all linear 0.25s;
+    -webkit-transition: all linear 0.25s;
+    -o-transition: all linear 0.25s;
+}
+
+.header .nav li a:hover, .header .nav li.active a, .header .nav li.active a:hover {
+    background: #c6c6c6;
+    color: #333;
+}
+
+.header .nav li.active ul.dropdown-menu li a {
+    color: #555;
+    background: #fff;
+    transition: all linear 0.25s;
+    -ms-transition: all linear 0.25s;
+    -moz-transition: all linear 0.25s;
+    -webkit-transition: all linear 0.25s;
+    -o-transition: all linear 0.25s;
+}
+
+.header .nav li.active ul.dropdown-menu li a:hover {
+    background: #c6c6c6;
+    color: #333;
+}
+
+.header .nav li.active a {
+    border: none !important;
+}
+
+.header .nav li:first-child {
+    border-left: 1px solid #dcdcdc;
+}
+
+.header, .btn {
+    border-radius: 0;
+    transition: all linear 0.25s;
+    -ms-transition: all linear 0.25s;
+    -moz-transition: all linear 0.25s;
+    -webkit-transition: all linear 0.25s;
+    -o-transition: all linear 0.25s;
+}
+
+.navbar-form {
+    padding: 0 20px 0 0;
+}
+
+.navbar-form input {
+    display: inline-block;
+}
+
+/* Set widths on the navbar form inputs since otherwise they're 100% wide */
+.navbar-form input[type="text"],
+.navbar-form input[type="password"] {
+    width: 180px;
+    border-radius: 0;
+}
+
+/* Undo the collapsing navbar */
+.navbar-collapse {
+    display: block !important;
+    height: auto !important;
+    padding-bottom: 0;
+    overflow: visible !important;
+}
+
+/* End header stuff */
+
+
+/* Demonstrate the grids */
+.col-xs-4 {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+/* Site content stuff here */
+
+div.thumbnail > a {
+    padding: 0;
+    border: none;
+    display: block;
+}
+
+div.thumbnail > a img {
+    display: inline-block;
+    max-width: 100%;
+}
+
+/* dashboard page styles */
+
+#dash div.row {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+    height: 60px;
+    background-color: #ececed;
+}
+
