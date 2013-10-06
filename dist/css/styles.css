@@ -298,3 +298,11 @@ div.thumbnail > a img {
     background-color: #ececed;
 }
 
+.trends{
+    list-style-type: none;
+}
+
+.trends li{
+    font-size: 12pt;
+}
+

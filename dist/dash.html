@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to the Twit Clone</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js" type="text/javascript"></script>
+    <script src="js/jquery-1.10.2.min.js" type="text/javascript" type="text/javascript"></script>
+    <script src="js/respond.min.js" type="text/javascript" type="text/javascript"></script>
+    <![endif]-->
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/styles.css" rel="stylesheet" media="screen">
+
+    <link href="http://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet" media="screen"
+          type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Helvetica+Neue" rel="stylesheet" media="screen"
+          type="text/css">
+</head>
+<body id="dash">
+<div id="wrap">
+    <!-- Static navbar -->
+    <div class="header navbar navbar-default navbar-static-top">
+        <div class="container">
+
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Twit Clone</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class=""><a href="/">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Menu <b
+                            class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/">Dropdown 1</a></li>
+                            <li><a href="/">Dropdown 2</a></li>
+                            <li><a href="/">Dropdown 3</a></li>
+                            <li><a href="/">Dropdown 4</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/">A Link</a></li>
+                    <li><a href="registration.html">Register</a></li>
+                </ul>
+                <form class="navbar-form navbar-right">
+                    <button type="submit" class="btn btn-primary ">Sign in</button>
+                    <input type="text" placeholder="Email" class="form-control">
+                    <input type="password" placeholder="Password" class="form-control">
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End of static navbar -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4"> <!-- user panel -->
+                <div class="row"> <!-- username -->
+                    <div class="col-xs-12">
+                        <a href="#"><h4>Doug Moreland</h4></a>
+                    </div>
+                </div>
+                <div class="btn-group row">
+                    <div class="col-xs-4">
+                        <button type="button" class="btn btn-primary">250<br />Twics</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button type="button" class="btn btn-primary">101<br />Followers</button>
+                    </div>
+                    <div class="col-xs-4">
+                        <button type="button" class="btn btn-primary">1200<br />Following</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <input type="text" placeholder="Compose Twic" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary">POST</button>
+                            </span>
+                        </div>
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h4>Trending</h4>
+                        <ul class="trends">
+                            <li><a href="#">#FranklinUniversity</a></li>
+                            <li><a href="#">#ThingsToDoWithString</a></li>
+                            <li><a href="#">#MarvelUniverse</a></li>
+                            <li><a href="#">#GuildWars2</a></li>
+                            <li><a href="#">#JavaSucks</a></li>
+                            <li><a href="#">#TheWalkingDead</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-xs-7">
+                <div class="row">
+                    <div class="col-xs-12 panel panel-default">
+                        <div class="panel-heading"><h4>Twics</h4></div>
+                        <div class="panel-body">
+                            <p><a href="#">MLB</a> <a href="#">@MLB</a><br />
+                            Alex Rodriguez says that he is addicted to Meth but that he thought his dealer was a Doctor<br />
+                            <a href="#">#Clueless</a> <a href="#">#SleeplessInNewYork</a><br />
+                            <a href="#">View</a> <a href="#">Reply</a> <a href="#">Retwic</a> <a href="#">Favorite</a></p><br />
+
+                            <p><a href="#">Doug Moreland</a> <a href="#">@LessLand</a><br />
+                            <a href="#">Franklin University</a> now offering HUMN102 - Underwater Basket Weaving<br />
+                            <a href="#">#HumanitiesWithPurpose</a><br />
+                            <a href="#">View</a> <a href="#">Reply</a> <a href="#">Retwic</a> <a href="#">Favorite</a></p><br/>
+
+                            <p><a href="#">Random Buckeye Hater</a> <a href="#">@BuckeyeHater</a><br />
+                            Da Suckeyes suxxors and will get pwned by the Iowa Hawkees<br />
+                            <a href="#">#BlindHatred</a> <a href="#">Jealousy</a><br />
+                            <a href="#">View</a> <a href="#">Reply</a> <a href="#">Retwic</a> <a href="#">Favorite</a></p><br/>
+
+                            <p><a href="#">More</a></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- container -->
+</div> <!-- wrap -->
+<div id="footer">
+    <div class="container">
+        <p class="text-center text-muted credit bottom">&copy;2013 Twit Clone LLC</p>
+    </div>
+</div>
+<!-- /container -->
+
+<!-- JavaScript plugins (requires jQuery) -->
+<!--[if gte IE 9]><!-->
+<script src="js/jquery-2.0.3.min.js" type="text/javascript"></script>
+<![endif]-->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/holder.js" type="text/javascript"></script>
+
+</body>
+</html>
