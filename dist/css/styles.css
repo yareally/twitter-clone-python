@@ -254,6 +254,8 @@ body {
 .col-xs-4 {
     padding-top: 15px;
     padding-bottom: 15px;
+    border-radius: 15px;
+    background: #ececed;
 }
 
 /* Undo the collapsing navbar */
