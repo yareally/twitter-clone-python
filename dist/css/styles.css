@@ -258,6 +258,20 @@ body {
     background: #ececed;
 }
 
+.col-xs-7 {
+    /*padding-top: 15px;*/
+    padding-bottom: 15px;
+    border-radius: 15px;
+}
+
+.col-xs-4 a:hover{
+    background: #c6c6c6;
+}
+
+.col-xs-7 a:hover {
+    background:#c6c6c6;
+}
+
 /* Undo the collapsing navbar */
 .navbar-collapse {
     display: block !important;
