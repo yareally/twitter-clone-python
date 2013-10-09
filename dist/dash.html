@@ -32,26 +32,25 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class=""><a href="/">Home</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Menu <b
-                            class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/">Dropdown 1</a></li>
-                            <li><a href="/">Dropdown 2</a></li>
-                            <li><a href="/">Dropdown 3</a></li>
-                            <li><a href="/">Dropdown 4</a></li>
-                        </ul>
-                    </li>
+                    <li class=""><a href="/">Settings</a></li>
+                    <!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Menu <b
+                                                class="caret"></b></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="/">Dropdown 1</a></li>
+                                                <li><a href="/">Dropdown 2</a></li>
+                                                <li><a href="/">Dropdown 3</a></li>
+                                                <li><a href="/">Dropdown 4</a></li>
+                                            </ul>
+                                        </li>-->
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/">A Link</a></li>
+                    <li><a href="/">Logout</a></li>
                     <li><a href="registration.html">Register</a></li>
                 </ul>
                 <form class="navbar-form navbar-right">
-                    <button type="submit" class="btn btn-primary ">Sign in</button>
-                    <input type="text" placeholder="Email" class="form-control">
-                    <input type="password" placeholder="Password" class="form-control">
+                    <button type="submit" class="btn btn-primary ">Search</button>
+                    <input type="text" placeholder="Enter a Search" class="form-control">
 
                 </form>
             </div>
@@ -69,25 +68,26 @@
                 </div>
                 <div class="btn-group row">
                     <div class="col-xs-4">
-                        <button type="button" class="btn btn-primary">250<br />Twics</button>
+                        <button type="button" class="btn btn-success">250<br/>Twics</button>
                     </div>
                     <div class="col-xs-4">
-                        <button type="button" class="btn btn-primary">101<br />Followers</button>
+                        <button type="button" class="btn btn-success">101<br/>Followers</button>
                     </div>
                     <div class="col-xs-4">
-                        <button type="button" class="btn btn-primary">1200<br />Following</button>
+                        <button type="button" class="btn btn-success">1200<br/>Following</button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="input-group">
-                            <input type="text" placeholder="Compose Twic" class="form-control">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary">POST</button>
-                            </span>
+                            <textarea placeholder="Compose Twic" class="form-control"></textarea>
+                            <button class="btn btn-primary">POST</button>
+
                         </div>
                     </div>
-                </div><br />
+                </div>
+                <br/>
+
                 <div class="row">
                     <div class="col-xs-12">
                         <h4>Trending</h4>
@@ -106,33 +106,68 @@
 
             <div class="col-xs-7">
                 <div class="row">
-                    <div class="col-xs-12 panel panel-default">
+                    <div class="panel panel-default">
                         <div class="panel-heading"><h4>Twics</h4></div>
                         <div class="panel-body">
-                            <p><a href="#">MLB</a> <a href="#">@MLB</a><br />
-                            Alex Rodriguez says that he is addicted to Meth but that he thought his dealer was a Doctor<br />
-                            <a href="#">#Clueless</a> <a href="#">#SleeplessInNewYork</a><br />
-                            <a href="#">View</a> <a href="#">Reply</a> <a href="#">Retwic</a> <a href="#">Favorite</a></p><br />
 
-                            <p><a href="#">Doug Moreland</a> <a href="#">@LessLand</a><br />
-                            <a href="#">Franklin University</a> now offering HUMN102 - Underwater Basket Weaving<br />
-                            <a href="#">#HumanitiesWithPurpose</a><br />
-                            <a href="#">View</a> <a href="#">Reply</a> <a href="#">Retwic</a> <a href="#">Favorite</a></p><br/>
+                            <ul>
+                                <li><h4><a href="#">MLB</a> <a href="#">@MLB</a></h4>
+                                </li>
 
-                            <p><a href="#">Random Buckeye Hater</a> <a href="#">@BuckeyeHater</a><br />
-                            Da Suckeyes suxxors and will get pwned by the Iowa Hawkees<br />
-                            <a href="#">#BlindHatred</a> <a href="#">Jealousy</a><br />
-                            <a href="#">View</a> <a href="#">Reply</a> <a href="#">Retwic</a> <a href="#">Favorite</a></p><br/>
+                                <li><p>Alex Rodriguez says that he is addicted to Meth but that he thought his
+                                    dealer was a Doctor <a href="#" class="hashtag">#Clueless</a> <a href="#"
+                                                                                                     class="hashtag">#SleeplessInNewYork</a>
+                                </p></li>
+                                <li><a href="#"><span
+                                    class="glyphicon glyphicon-eye-open"> View</span></a><a href="#"> <span
+                                    class="glyphicon glyphicon-share-alt"> Reply</span></a><a href="#"> <span
+                                    class="glyphicon glyphicon-retweet"> Retwic</span></a><a
+                                    href="#"> <span
+                                    class="glyphicon glyphicon-heart"> Favorite</span></a></li>
 
-                            <p><a href="#">More</a></p>
+                            </ul>
+                            <ul>
+                                <li><h4><a href="#">Doug Moreland</a> <a href="#">@LessLand</a></h4>
+                                </li>
+
+                                <li><p><a href="#">Franklin University</a> now offering HUMN102 - Underwater
+                                    Basket Weaving <a href="#" class="hashtag">#HumanitiesWithPurpose</a></li>
+
+                                <li><a href="#"><span
+                                    class="glyphicon glyphicon-eye-open"> View</span></a><a href="#"> <span
+                                    class="glyphicon glyphicon-share-alt"> Reply</span></a><a href="#"> <span
+                                    class="glyphicon glyphicon-retweet"> Retwic</span></a><a
+                                    href="#"> <span
+                                    class="glyphicon glyphicon-heart"> Favorite</span></a></li>
+
+                            </ul>
+                            <ul>
+                                <li><h4><a href="#">Random Buckeye Hater</a> <a href="#">@BuckeyeHater</a></h4>
+                                </li>
+
+                                <li><p>Da Suckeyes suxxors and will get pwned by the Iowa Hawkees <a href="#"
+                                                                                                     class="hashtag">#BlindHatred</a>
+                                    <a href="#" class="hashtag">#Jealousy</a></p></li>
+
+                                <li><a href="#"><span
+                                    class="glyphicon glyphicon-eye-open"> View</span></a><a href="#"> <span
+                                    class="glyphicon glyphicon-share-alt"> Reply</span></a><a href="#"> <span
+                                    class="glyphicon glyphicon-retweet"> Retwic</span></a><a
+                                    href="#"> <span
+                                    class="glyphicon glyphicon-heart"> Favorite</span></a></li>
+
+                            </ul>
+                            <div><a href="#">More</a></div>
 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div> <!-- container -->
-</div> <!-- wrap -->
+    </div>
+    <!-- container -->
+</div>
+<!-- wrap -->
 <div id="footer">
     <div class="container">
         <p class="text-center text-muted credit bottom">&copy;2013 Twit Clone LLC</p>
