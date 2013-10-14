@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+{% block title %}Welcome To Twic{% endblock %}
+{% block logout %}Logout{% endblock %}
+{% block user %}Doug Moreland{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-xs-4"> <!-- user panel -->
+        <div class="row"> <!-- username -->
+            <div class="col-xs-12">
+                <a href="#"><h4>Doug Moreland</h4></a>
+            </div>
+        </div>
+        <div class="btn-group row">
+            <div class="col-xs-4">
+                <button type="button" class="btn btn-success">250<br/>Twics</button>
+            </div>
+            <div class="col-xs-4">
+                <button type="button" class="btn btn-success">101<br/>Followers</button>
+            </div>
+            <div class="col-xs-4">
+                <button type="button" class="btn btn-success">1200<br/>Following</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="input-group">
+                    <textarea placeholder="Compose Twic" class="form-control"></textarea>
+                    <button class="btn btn-primary">POST</button>
+
+                </div>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <h4>Trending</h4>
+                <ul class="trends">
+                    <li><a href="#">#FranklinUniversity</a></li>
+                    <li><a href="#">#ThingsToDoWithString</a></li>
+                    <li><a href="#">#MarvelUniverse</a></li>
+                    <li><a href="#">#GuildWars2</a></li>
+                    <li><a href="#">#JavaSucks</a></li>
+                    <li><a href="#">#TheWalkingDead</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-xs-7">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Twics</h4></div>
+                <div class="panel-body">
+
+                    <ul>
+                        <li><h4><a href="#">MLB</a> <a href="#">@MLB</a></h4>
+                        </li>
+
+                        <li><p>Alex Rodriguez says that he is addicted to Meth but that he thought his
+                            dealer was a Doctor <a href="#" class="hashtag">#Clueless</a> <a href="#"
+                                                                                             class="hashtag">#SleeplessInNewYork</a>
+                        </p></li>
+                        <li><a href="#"><span
+                            class="glyphicon glyphicon-eye-open"> View</span></a><a href="#"> <span
+                            class="glyphicon glyphicon-share-alt"> Reply</span></a><a href="#"> <span
+                            class="glyphicon glyphicon-retweet"> Retwic</span></a><a
+                            href="#"> <span
+                            class="glyphicon glyphicon-heart"> Favorite</span></a></li>
+
+                    </ul>
+                    <ul>
+                        <li><h4><a href="#">Doug Moreland</a> <a href="#">@LessLand</a></h4>
+                        </li>
+
+                        <li><p><a href="#">Franklin University</a> now offering HUMN102 - Underwater
+                            Basket Weaving <a href="#" class="hashtag">#HumanitiesWithPurpose</a></li>
+
+                        <li><a href="#"><span
+                            class="glyphicon glyphicon-eye-open"> View</span></a><a href="#"> <span
+                            class="glyphicon glyphicon-share-alt"> Reply</span></a><a href="#"> <span
+                            class="glyphicon glyphicon-retweet"> Retwic</span></a><a
+                            href="#"> <span
+                            class="glyphicon glyphicon-heart"> Favorite</span></a></li>
+
+                    </ul>
+                    <ul>
+                        <li><h4><a href="#">Random Buckeye Hater</a> <a href="#">@BuckeyeHater</a></h4>
+                        </li>
+
+                        <li><p>Da Suckeyes suxxors and will get pwned by the Iowa Hawkees <a href="#"
+                                                                                             class="hashtag">#BlindHatred</a>
+                            <a href="#" class="hashtag">#Jealousy</a></p></li>
+
+                        <li><a href="#"><span
+                            class="glyphicon glyphicon-eye-open"> View</span></a><a href="#"> <span
+                            class="glyphicon glyphicon-share-alt"> Reply</span></a><a href="#"> <span
+                            class="glyphicon glyphicon-retweet"> Retwic</span></a><a
+                            href="#"> <span
+                            class="glyphicon glyphicon-heart"> Favorite</span></a></li>
+
+                    </ul>
+                    <div><a href="#">More</a></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

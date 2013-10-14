@@ -1,9 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>{% block title%}{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js" type="text/javascript"></script>
+    <script src="js/jquery-1.10.2.min.js" type="text/javascript" type="text/javascript"></script>
+    <script src="js/respond.min.js" type="text/javascript" type="text/javascript"></script>
+    <![endif]-->
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/styles.css" rel="stylesheet" media="screen">
+
+    <link href="http://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet" media="screen"
+          type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Helvetica+Neue" rel="stylesheet" media="screen"
+          type="text/css">
 </head>
-<body>
+<body id="dash">
+<div id="wrap">
+    <!-- Static navbar -->
+    <div class="header navbar navbar-default navbar-static-top">
+        <div class="container">
+
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Twit Clone</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class=""><a href="/">Home</a></li>
+                    <li class=""><a href="/">Settings</a></li>
+                    <!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Menu <b
+                                                class="caret"></b></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="/">Dropdown 1</a></li>
+                                                <li><a href="/">Dropdown 2</a></li>
+                                                <li><a href="/">Dropdown 3</a></li>
+                                                <li><a href="/">Dropdown 4</a></li>
+                                            </ul>
+                                        </li>-->
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/">{% block logout %}{% endblock %} Login</a></li>
+                    <li><a href="registration.html">{% block user %}{% endblock %} Register</a></li>
+                </ul>
+                <form class="navbar-form navbar-right">
+                    <button type="submit" class="btn btn-primary ">Search</button>
+                    <input type="text" placeholder="Enter a Search" class="form-control">
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End of static navbar -->
+
+    <div class="container">
+        {% block content %}{% endblock%}
+    </div>
+    <!-- container -->
+</div>
+<!-- wrap -->
+<div id="footer">
+    <div class="container">
+        <p class="text-center text-muted credit bottom">&copy;2013 Twit Clone LLC</p>
+    </div>
+</div>
+<!-- /container -->
+
+<!-- JavaScript plugins (requires jQuery) -->
+<!--[if gte IE 9]><!-->
+<script src="js/jquery-2.0.3.min.js" type="text/javascript"></script>
+<![endif]-->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/holder.js" type="text/javascript"></script>
 
 </body>
 </html>
