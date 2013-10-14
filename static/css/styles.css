@@ -23,7 +23,7 @@ h3 {
 
 h4 {
     font-size: 20px;
-    line-height: 20px;
+    line-height: 22px;
 }
 
 q
@@ -321,9 +321,10 @@ div.thumbnail > a img {
 }
 
 
-#dash .panel-body li > a {
-    color: #d2322d;
+#dash .panel-body li > a, #dash .panel-body li > a:hover {
+    color: #e5786d;
     margin-left: 10px;
+    background-color: #fff;
 }
 
 .hashtag {
