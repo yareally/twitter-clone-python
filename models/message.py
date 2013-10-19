@@ -1,3 +1,6 @@
+from collections import OrderedDict
+
+
 class Message():
     # just the id to reference the message
     id = 0
@@ -12,13 +15,13 @@ class Message():
     # users that retweeted the message
     retweet_by = set()
     # users that replied to the message
-    replies = set()
+    replies = OrderedDict
     # any hashtags for the message
     hashtags = set()
     # who is the message to be sent to? (zero or more people)
     recipients = set()
 
-    def __init(self, user_id, message, timestamp='', favorite_by=set, retweet_by=set, replies=set, hashtags=set, recipients=set):
+    def __init__(self, user_id, message, timestamp='', favorite_by=set, retweet_by=set, replies=OrderedDict, hashtags=set, recipients=set):
         self.user_id = user_id
         self.message = message
         self.timestamp = timestamp

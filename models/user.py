@@ -4,6 +4,7 @@ class User():
     email = ''
     name = ''
     password = ''
+    messages = dict
 
     def __init__(self, username, email, password, name = ''):
         self.username = username

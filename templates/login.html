@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block title %}Welcome To Twic{% endblock %}
+{% block logout %}Logout{% endblock %}
+{% block user %}Doug Moreland{% endblock %}
+{% block page_name %}login{% endblock %}
+{% block content %}
+<div class="row panel panel-default">
+
+    <div class="panel-heading">
+        <ul class="breadcrumb-primary breadcrumb panel-title">
+            <li><a href="{{ url_for('dash') }}">Home</a></li>
+            <li><a href="{{ url_for('login') }}">Login Page</a></li>
+        </ul>
+    </div>
+    <form action="{{ url_for('login') }}" class="form-signin" method="post">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="text" class="form-control" placeholder="Email or Username" autofocus>
+        <input type="password" class="form-control" placeholder="Password">
+        <label class="checkbox">
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+        <button class="btn btn-lg btn-danger btn-block" type="submit">Sign in</button>
+    </form>
+</div>
+{% endblock %}
