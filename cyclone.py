@@ -1,9 +1,9 @@
-from tornado.web import RequestHandler
+from tornado.web import FallbackHandler
 from tornado.wsgi import WSGIContainer
 from tornado.ioloop import IOLoop
 from flask_main import app
 from sockjs.tornado import SockJSRouter, SockJSConnection
-from app_wrap import Application, FallbackHandler
+from app_wrap import Application
 
 class AsyncConnection(SockJSConnection):
     """Chat connection implementation"""
