@@ -5,6 +5,7 @@ from flask_main import app
 from sockjs.tornado import SockJSRouter, SockJSConnection
 from app_wrap import Application
 
+
 class AsyncConnection(SockJSConnection):
     """Chat connection implementation"""
     # Class level variable
@@ -32,8 +33,6 @@ class AsyncConnection(SockJSConnection):
         self.broadcast(self.participants, "Someone left.")
 
 
-
-
 if __name__ == "__main__":
     import logging
 
@@ -42,10 +41,8 @@ if __name__ == "__main__":
     flask_app = WSGIContainer(app)
     AsyncRouter = SockJSRouter(AsyncConnection, '/async')
 
-    application = Application([
-                                  # pass off to Flask if we're not using tornado
-                                  (r".*", FallbackHandler,
-                                   dict(fallback=flask_app)), ], debug=True)
+    # pass off to Flask if we're not using tornado for anything other than comet/async
+    application = Application([(r".*", FallbackHandler, dict(fallback=flask_app)), ], debug=True)
 
     # separate app for async stuff
     async_app = Application(AsyncRouter.urls, debug=True)
