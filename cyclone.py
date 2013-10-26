@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
     # listen for async requests
     # Type http://<server-ip-here>:8080/async to access flask stuff
-    async_app.listen(8080)
+    async_app.listen(8081)
 
     # listen for normal web requests
     # Type http://<server-ip-here>:5000 to access flask stuff

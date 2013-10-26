@@ -25,7 +25,7 @@
                     return $(this).attr('id');
                 }).get();
 
-                conn = new SockJS('http://' + window.location.hostname + ':8080/async', transports);
+                conn = new SockJS('http://' + window.location.hostname + ':8081/async', transports);
 
                 log('Connecting...');
 

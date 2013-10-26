@@ -42,3 +42,7 @@ validation-staus.json
 .CVS
 .idea
 node_modules
+
+# Added by Tony
+*.pyc
+*.iml
