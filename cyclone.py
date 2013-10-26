@@ -4,7 +4,7 @@ from tornado.ioloop import IOLoop
 from flask_main import app
 from sockjs.tornado import SockJSRouter, SockJSConnection
 from app_wrap import Application
-
+from flask import session
 
 class AsyncConnection(SockJSConnection):
     """Chat connection implementation"""
@@ -39,7 +39,8 @@ if __name__ == "__main__":
     logging.getLogger().setLevel(logging.DEBUG)
 
     flask_app = WSGIContainer(app)
-    AsyncRouter = SockJSRouter(AsyncConnection, '/async')
+
+    AsyncRouter = SockJSRouter(AsyncConnection, '/async',)
 
     # pass off to Flask if we're not using tornado for anything other than comet/async
     application = Application([(r".*", FallbackHandler, dict(fallback=flask_app)), ], debug=True)
