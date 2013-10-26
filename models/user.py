@@ -42,8 +42,14 @@ class User(object):
         return self._values['id']
 
     @id.setter
-    def id(self, user_id):
-        self._values['id'] = user_id
+    def id(self, value):
+        self._values['id'] = value
 
     def __iter__(self):
         return self._values.__iter__()
+
+    def __setitem__(self, key, value):
+        self._values[key] = value
+
+    def __getitem__(self, item):
+        return self._values[item]
