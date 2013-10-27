@@ -14,8 +14,8 @@
     </div>
     <form action="{{ url_for('login') }}" class="form-signin" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" class="form-control" placeholder="Email or Username" autofocus>
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="text" class="form-control" name='name' placeholder="Email or Username" autofocus>
+        <input type="password" class="form-control" name='password' placeholder="Password">
         <label class="checkbox">
             <input type="checkbox" value="remember-me"> Remember me
         </label>
