@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import os
 from redis import StrictRedis
+from controllers.register import register
 
 app = Flask(__name__)
 
@@ -16,9 +17,10 @@ def dash(page_name=None):
 def login(page_name=None):
     return render_template('login.html', page_name='login')
 
-@app.route('/registration')
+@app.route('/registration', methods=['POST', 'GET'])
 def registration(page_name=None):
-    return render_template('registration.html', page_name='registration')
+    return register(app)
+
 
 
 @app.route('/async-demo')
