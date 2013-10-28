@@ -2,12 +2,8 @@ __author__ = 'tony'
 from flask import Flask, request, render_template
 from redis import StrictRedis
 import os
-<<<<<<< HEAD
-app = Flask(__name__)
-@app.route('/login', methods=['POST', 'GET'])
-def register():
-=======
-from libs.rediswrapper import UserHelper
+
+from libs.RedisWrapper import UserHelper
 
 def register(app):
     """
@@ -17,7 +13,7 @@ def register(app):
     @return:
     @rtype:
     """
->>>>>>> cf3cb4097b34c441f24e7942f6ec747fbe2731d8
+
     error = None
 
     if request.method == 'POST':
