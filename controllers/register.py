@@ -3,7 +3,7 @@ from flask import Flask, request, render_template
 from redis import StrictRedis
 import os
 app = Flask(__name__)
-@app.route('/login', methods=['POST', 'GET'])
+@app.route('/registration', methods=['POST', 'GET'])
 def register():
     error = None
     if request.method == 'POST':
