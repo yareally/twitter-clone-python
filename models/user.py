@@ -1,5 +1,6 @@
+# coding=utf-8
 from collections import OrderedDict
-
+from libs.token import Token
 
 class User(object):
     """
@@ -25,7 +26,7 @@ class User(object):
         self._values[self.NAME_KEY] = name
         self._values[self.PASS_KEY] = password
         self._values[self.USER_ID_KEY] = 0
-
+       # self.token = Token()
 
     @property
     def email(self):
