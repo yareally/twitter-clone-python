@@ -2,7 +2,7 @@
 import unittest
 import redis
 from models.user import User
-from libs import rediswrapper
+from libs import RedisWrapper
 
 class RedisTests(unittest.TestCase):
     """
@@ -13,7 +13,7 @@ class RedisTests(unittest.TestCase):
 
     def setUp(self):
         self.redis = redis.StrictRedis()
-        self.dbh = rediswrapper.UserHelper(self.redis)
+        self.dbh = RedisWrapper.UserHelper(self.redis)
         self.user = User('a-user', 'email@whatever.com', 'plaintextemail', 'Jon Smith')
 
     def test_add_user(self):

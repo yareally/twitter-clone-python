@@ -1,11 +1,14 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session
 from libs import session
 from redis import StrictRedis
 import os
+from libs import RedisWrapper
+from libs.RedisWrapper import UserHelper
+import redis
+from models.user import User
 
-app = Flask(__name__)
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+
+def login(self, app):
     error = None
     if request.method == 'POST':
         if request.form['name'] != app.config['name']:
@@ -14,10 +17,11 @@ def login():
             error = 'Invalid Password'
         else:
             # Set the session as logged in.
-            userid = 1  # Get the user id from the database.
-            if userid:
-                session.logged_in = True
-                return render_template('dash.html', error=error)
-            else:
-                error = 'Invalid User'
+            self.redis = redis.StrictRedis()
+            self.dbh = RedisWrapper.UserHelper(self.redis)
+            if self.dbh.email_exists(request.form['name']):
+                user = self.dbh.get_user_by_email(request.form['name'])
+            elif self.dbh.username_exists(request.form['name']):
+                user = self.dbh.get_user_by_username(request.form['name'])
+            #  Todo: Need to find out how to validate the user.
         return render_template('login.html', error=error)

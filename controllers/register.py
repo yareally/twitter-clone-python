@@ -1,11 +1,14 @@
 __author__ = 'tony'
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session
 from redis import StrictRedis
 import os
-
+from libs import RedisWrapper
 from libs.RedisWrapper import UserHelper
+import redis
+from models.user import User
 
-def register(app):
+
+def register(self, app):
     """
 
     @param app:
@@ -21,15 +24,20 @@ def register(app):
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
+        user = User(username, email, password, name)
+        if name == '' or username == '' or email == '' or password == '':
+            error = 'All fields are required'
+            return render_template('registration.html', error=error, user=user)
+        else:
+            self.redis = redis.StrictRedis()
+            self.dbh = RedisWrapper.UserHelper(self.redis)
+            self.dbh.add_user(user)
+            return render_template('dash.html')
+            # Logic to insert user into database.
+
     else:
         error = 'Invalid method'
         return render_template('registration.html', error=error)
 
-    if name == '' or username == '' or email == '' or password == '':
-        error = 'All fields are required'
-        return render_template('registration.html', error=error)
-    else:
 
-        return 'everything okay!'
-        # Logic to insert user into database.
 
