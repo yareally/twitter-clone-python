@@ -54,6 +54,7 @@ class Token(object):
         @type message: str
         @return: the hash based message auth code (to verify against the client sent one)
         @rtype: str
+        @see: http://en.wikipedia.org/wiki/Hash-based_message_authentication_code
         """
 
         if len(key) > self.__BLOCK_SIZE:

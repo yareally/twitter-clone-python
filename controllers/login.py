@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template, session
-from libs import session
 from redis import StrictRedis
 import os
 from libs.rediswrapper import UserHelper
