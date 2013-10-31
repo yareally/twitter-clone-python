@@ -1,3 +1,4 @@
+# coding=utf-8
 import os
 from redis import StrictRedis
 from models.user import User
@@ -34,6 +35,7 @@ class UserHelper(object):
 
         @param twit_user:
         @type twit_user: User
+        @return: the redis bound result after adding
         """
         twit_user.id = self.user_id
         trans = self.redis.pipeline()
@@ -56,8 +58,8 @@ class UserHelper(object):
         """
 
         @param user_id:
-        @type user_id:
-        @return:
+        @type user_id: int
+        @return: or None if not found
         @rtype: User
         """
 
@@ -70,7 +72,7 @@ class UserHelper(object):
         user = User()
 
         for key, value in user.items():
-            user[key] = self.redis.get(self.__set_user_string(user_id, key))
+            user[key] = self.redis.get(self.__set_user_string(str(user_id), key))
 
         return user
 
@@ -78,8 +80,8 @@ class UserHelper(object):
         """
 
         @param email:
-        @type email:
-        @return:
+        @type email: str
+        @return: the queried user object or None if not found
         @rtype: User
         """
         user_id = self.redis.get(self.__set_user_string(User.EMAIL_KEY, email))
@@ -90,8 +92,8 @@ class UserHelper(object):
         """
 
         @param username:
-        @type username:
-        @return:
+        @type username: str
+        @return: The queried user object or None if not found
         @rtype: User
         """
 
@@ -102,13 +104,13 @@ class UserHelper(object):
         """
 
         @param user_id:
-        @type user_id: str
+        @type user_id: int
         @return: True if the user_id exists in the db
-        @rtype: Boolean
+        @rtype: bool
         """
         if not user_id:
             user_id = self.user_id
-        return self.redis.get(self.__set_user_string(user_id, User.USER_ID_KEY))
+        return self.redis.get(self.__set_user_string(str(user_id), User.USER_ID_KEY))
 
     def email_exists(self, email):
         """
@@ -116,7 +118,7 @@ class UserHelper(object):
         @param email:
         @type email: str
         @return: True if the email exists in the db
-        @rtype: Boolean
+        @rtype: bool
         """
         result = self.__user_property_exists(email, User.USER_ID_KEY)
         return result
@@ -127,7 +129,7 @@ class UserHelper(object):
         @param username:
         @type username: str
         @return: True if the username exists in the db
-        @rtype: Boolean
+        @rtype: bool
         """
         return self.__user_property_exists(username, User.USER_ID_KEY)
 
@@ -135,9 +137,14 @@ class UserHelper(object):
         """
 
         @param user_id:
+        @type user_id: int
         @param email:
+        @type email: str
         @param username:
+        @type username: str
         @param verify:
+        @type verify: bool
+        @return redis bound result from deletion
         @raise ValueError, ConnectionError: If something cannot be deleted or cannot connect to redis
         """
         if not user_id and not email and not username:
@@ -179,8 +186,9 @@ class UserHelper(object):
 
         @param first_key: Name of the stored key to check against in redis
         @type first_key: str
+        @param second_key:
         @type second_key: str
-        @rtype: Boolean
+        @rtype: bool
         """
         lookup_key = self.__set_user_string(first_key, second_key)
         result = self.redis.get(lookup_key)
@@ -205,7 +213,7 @@ class UserHelper(object):
         """
         Get the next user id from the db
 
-        @rtype : str
+        @rtype : int
         """
         return self.redis.incr(self.__NEXT_USER_KEY)
 
