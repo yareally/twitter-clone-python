@@ -2,8 +2,7 @@ from flask import Flask, request, render_template, session
 from libs import session
 from redis import StrictRedis
 import os
-from libs import RedisWrapper
-from libs.RedisWrapper import UserHelper
+from libs.rediswrapper import UserHelper
 import redis
 from models.user import User
 
@@ -18,7 +17,7 @@ def login(self, app):
         else:
             # Set the session as logged in.
             self.redis = redis.StrictRedis()
-            self.dbh = RedisWrapper.UserHelper(self.redis)
+            self.dbh = UserHelper(self.redis)
             if self.dbh.email_exists(request.form['name']):
                 user = self.dbh.get_user_by_email(request.form['name'])
             elif self.dbh.username_exists(request.form['name']):

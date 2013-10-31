@@ -2,8 +2,7 @@ __author__ = 'tony'
 from flask import Flask, request, render_template, session
 from redis import StrictRedis
 import os
-from libs import RedisWrapper
-from libs.RedisWrapper import UserHelper
+from libs.rediswrapper import UserHelper
 import redis
 from models.user import User
 
@@ -30,7 +29,7 @@ def register(self, app):
             return render_template('registration.html', error=error, user=user)
         else:
             self.redis = redis.StrictRedis()
-            self.dbh = RedisWrapper.UserHelper(self.redis)
+            self.dbh = UserHelper(self.redis)
             self.dbh.add_user(user)
             return render_template('dash.html')
             # Logic to insert user into database.
