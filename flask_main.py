@@ -11,7 +11,7 @@ app = Flask(__name__)
 @app.route('/home')
 @app.route('/dash')
 def dash(page_name=None):
-    return render_template('dash.html', page_name='dash')
+    return render_template('login.html', page_name='dash', title='Login To Twic')
 
 @app.route('/login')
 def login(page_name=None):
@@ -19,7 +19,7 @@ def login(page_name=None):
 
 @app.route('/registration', methods=['POST', 'GET'])
 def registration(page_name=None):
-    return register(app)
+    return render_template('registration.html', page_name='registration', title='Twic Registration')
 
 
 

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Welcome To Twic{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 {% block logout %}Logout{% endblock %}
 {% block user %}Doug Moreland{% endblock %}
 {% block page_name %}registration{% endblock %}
@@ -23,6 +23,16 @@
             </div>
 
         {% else %}
+
+            {% if error %}
+
+                <ul>
+                {% for err in error %}
+                    <li>{{ err }}</li>
+                {% endfor %}
+                </ul>
+
+            {% endif %}
 
             <form method="post" action="{{ url_for('registration') }}" class="form-horizontal">
 

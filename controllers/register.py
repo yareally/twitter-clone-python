@@ -19,24 +19,26 @@ def register(self, app):
     error = None
 
     if request.method == 'POST':
+        error = list()
         name = request.form['name']
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
         user = User(username, email, password, name)
+        self.redis = redis.StrictRedis()
+        self.dbh = UserHelper(self.redis)
         if name == '' or username == '' or email == '' or password == '':
-            error = 'All fields are required'
-            return render_template('registration.html', error=error, user=user)
+            error.append('All fields are required')
+            return render_template('registration.html', error=error, title='Twic Registration', user=user)
+        elif self.dbh.email_exists(user.email) or self.dbh.username_exists(user.username):
+            error.append('That user already exists. Please login')
+            return render_template('login.html', error=error, title='Login To Twic', user=user)
         else:
-            self.redis = redis.StrictRedis()
-            self.dbh = UserHelper(self.redis)
             self.dbh.add_user(user)
-            return render_template('dash.html')
-
-
+            return render_template('registration.html', title='Twic Registration')
     else:
-        error = 'Invalid method'
-        return render_template('registration.html', error=error)
+        error.append('Invalid method')
+        return render_template('registration.html', error=error, title='Twic Registration')
 
 
 
