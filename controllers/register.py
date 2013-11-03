@@ -32,7 +32,7 @@ def register(self, app):
             self.dbh = UserHelper(self.redis)
             self.dbh.add_user(user)
             return render_template('dash.html')
-            # Logic to insert user into database.
+
 
     else:
         error = 'Invalid method'
