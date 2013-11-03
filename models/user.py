@@ -1,7 +1,7 @@
 # coding=utf-8
 from collections import OrderedDict
-from libs.rediswrapper import UserHelper
-from libs.token import Token
+import os
+#from libs.rediswrapper import UserHelper
 
 
 class User(object):
@@ -21,16 +21,16 @@ class User(object):
     EMAIL_KEY = 'email'
     PASS_KEY = 'password'
     NAME_KEY = 'name'
-    SALT     = 'salt'
+    SALT = 'salt'
 
-    def __init__(self, username = '', email = '', password = '', name='', salt=''):
+    def __init__(self, username='', email='', password='', name='', salt=''):
         self._values[self.USERNAME_KEY] = username
         self._values[self.EMAIL_KEY] = email
         self._values[self.NAME_KEY] = name
         self._values[self.PASS_KEY] = password
-        self._values[self.SALT] = salt if salt else UserHelper.generate_salt()
+        self._values[self.SALT] = salt if salt else os.urandom(24).encode('base_64')
         self._values[self.USER_ID_KEY] = 0
-       # self.token = Token()
+        # self.token = Token()
 
     @property
     def email(self):
@@ -43,6 +43,10 @@ class User(object):
     @property
     def password(self):
         return self._values[self.PASS_KEY]
+
+    @property
+    def salt(self):
+        return self._values[self.SALT]
 
     @property
     def name(self):
