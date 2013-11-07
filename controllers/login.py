@@ -28,6 +28,7 @@ def login(self, app):
                 hashed_password = User.hash_password(password, user.salt)
                 if hashed_password == user.password:
                     # Save the user to the session
+                    session['user'] = user
                     return render_template('dash.html', title='Welcome to Twic')
             else:
                 error.append('That user does not exist.')

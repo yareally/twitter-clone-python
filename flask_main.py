@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 import os
 from redis import StrictRedis
 from controllers.register import register
@@ -11,9 +11,12 @@ app = Flask(__name__)
 @app.route('/home')
 @app.route('/dash')
 def dash(page_name=None):
-    return render_template('login.html', page_name='dash', title='Login To Twic')
+    #if session['user']:
+        #return render_template('dash.html', page_name='dash')
+    #else:
+    return render_template('dash.html', page_name='dash')
 
-@app.route('/login')
+@app.route('/login', methods=['POST', 'GET'])
 def login(page_name=None):
     return render_template('login.html', page_name='login')
 

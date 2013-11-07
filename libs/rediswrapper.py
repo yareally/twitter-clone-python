@@ -181,6 +181,18 @@ class UserHelper(object):
             salt = os.urandom(24).encode('base_64')
         return scrypt.hash(password, salt)
 
+    @staticmethod
+    def generate_salt(length=24):
+        """
+        @param length: Length of the salt
+        @type length: int
+        @return: the random salt string
+        @rtype: int
+        """
+        salt = os.urandom(length).encode('base_64')
+        return salt
+
+
     def __user_property_exists(self, first_key, second_key):
         """
 

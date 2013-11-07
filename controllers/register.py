@@ -35,7 +35,8 @@ def register(self, app):
             return render_template('login.html', error=error, title='Login To Twic', user=user)
         else:
             self.dbh.add_user(user)
-            return render_template('registration.html', title='Twic Registration')
+            session['user'] = user
+            return render_template('dash.html', title='Twic Registration')
     else:
         error.append('Invalid method')
         return render_template('registration.html', error=error, title='Twic Registration')
