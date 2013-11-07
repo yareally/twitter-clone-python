@@ -42,7 +42,7 @@ class UserHelper(object):
 
         for key, value in twit_user.items():
             if value == twit_user.password:
-                value = self.hash_password(twit_user.password)
+                value = UserHelper.hash_password(twit_user.password)
             trans.set(self.__set_user_string(twit_user.id, key), value)
 
         trans.set(self.__set_user_string(twit_user.username, User.USER_ID_KEY), twit_user.id)
@@ -133,7 +133,7 @@ class UserHelper(object):
         """
         return self.__user_property_exists(username, User.USER_ID_KEY)
 
-    def delete_user(self, user_id='', email='', username='', verify=False):
+    def delete_user(self, user_id='', email='', username=''):
         """
 
         @param user_id:
@@ -142,8 +142,6 @@ class UserHelper(object):
         @type email: str
         @param username:
         @type username: str
-        @param verify:
-        @type verify: bool
         @return redis bound result from deletion
         @raise ValueError, ConnectionError: If something cannot be deleted or cannot connect to redis
         """
@@ -178,20 +176,20 @@ class UserHelper(object):
         @rtype: str
         """
         if not salt:
-            salt = os.urandom(24).encode('base_64')
-        return scrypt.hash(password, salt)
+            salt = UserHelper.generate_salt()
+        return scrypt.hash(bytes(password), salt)
 
     @staticmethod
     def generate_salt(length=24):
         """
+
         @param length: Length of the salt
         @type length: int
         @return: the random salt string
         @rtype: int
         """
-        salt = os.urandom(length).encode('base_64')
+        salt = bytes(os.urandom(length).encode('base_64'))
         return salt
-
 
     def __user_property_exists(self, first_key, second_key):
         """
