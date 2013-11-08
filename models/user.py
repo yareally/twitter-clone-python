@@ -1,7 +1,7 @@
 # coding=utf-8
 from collections import OrderedDict
 import os
-#from libs.rediswrapper import UserHelper
+
 
 
 class User(object):
@@ -28,7 +28,7 @@ class User(object):
         self._values[self.EMAIL_KEY] = email
         self._values[self.NAME_KEY] = name
         self._values[self.PASS_KEY] = password
-        self._values[self.SALT] = salt if salt else os.urandom(24).encode('base_64')
+        self._values[self.SALT] = salt if salt else bytes(os.urandom(24).encode('base_64'))
         self._values[self.USER_ID_KEY] = 0
         # self.token = Token()
 

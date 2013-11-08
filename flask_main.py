@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, session
 import os
 from redis import StrictRedis
-from controllers.register import register
+from controllers.register import register as reg_controller
+from controllers.login import login as login_controller
 
 app = Flask(__name__)
-
-
+app.secret_key = '\x1c\xba\x97jT\xf1\xdb\x92S\xd7\x83\x0f{\xa3#\xf3\x9fg\xf3;\x96D\x01\x98'
 
 @app.route('/')
 @app.route('/home')
@@ -18,11 +18,11 @@ def dash(page_name=None):
 
 @app.route('/login', methods=['POST', 'GET'])
 def login(page_name=None):
-    return render_template('login.html', page_name='login')
+    return login_controller(app)
 
 @app.route('/registration', methods=['POST', 'GET'])
 def registration(page_name=None):
-    return render_template('registration.html', page_name='registration', title='Twic Registration')
+    return reg_controller(app)
 
 
 
@@ -36,3 +36,4 @@ def async_route(page_name=None):
 if __name__ == '__main__':
     app.debug = True
     app.run()
+
