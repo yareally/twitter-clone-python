@@ -207,6 +207,10 @@ class UserHelper(RedisBase):
         if not user_id:
             user_id = self.user_id
         self.redis.sadd(self.__set_user_string(user_id, User.FOLLOWERS_ID_KEY), follower_id)
+        # Also add user to the following user's people they follow set
+        self.redis.sadd(self.__set_user_string(follower_id, User.FOLLOWING_ID_KEY), user_id)
+
+
         #elif value is list():
         #    self.redis.lpush(self.__set_user_string(twit_user.id, key), value)
         #elif value is dict():
@@ -223,6 +227,23 @@ class UserHelper(RedisBase):
         if not user_id:
             user_id = self.user_id
         return self.redis.smembers(self.__set_user_string(user_id, User.FOLLOWERS_ID_KEY))
+
+    def add_following(self, follow_id, user_id=None):
+        """
+        Adds a user to follow to the current user
+
+        @param follow_id: The user id of the person to follow
+        @type follow_id: int
+        @param user_id: The user id of the person wanting to follow someone
+        @type user_id: int
+        """
+        if not user_id:
+            user_id = self.user_id
+        self.redis.sadd(self.__set_user_string(user_id, User.FOLLOWING_ID_KEY), follow_id)
+        # Also add the follower since the user is now following this person
+        self.redis.sadd(self.__set_user_string(follow_id, User.FOLLOWERS_ID_KEY), user_id)
+
+
 
     def get_post_id_range(self, start_post_id, end_post_id, user_id=None):
         """
