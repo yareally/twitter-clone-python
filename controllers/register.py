@@ -34,7 +34,7 @@ def register(app):
             return render_template('login.html', error=error, title='Login To Twic', user=user)
         else:
             dbh.add_user(user)
-            session['user'] = user
+            session['user'] = user.__str__()
             return render_template('dash.html', title='Twic Registration')
 
 

@@ -4,6 +4,7 @@ from redis import StrictRedis, WatchError
 from models.user import User
 import scrypt
 
+
 class RedisBase(object):
     """
     Base helper class for redis communication
@@ -30,6 +31,7 @@ class RedisBase(object):
         """
         query = ':'.join((primary_key,) + secondary_keys)
         return query
+
 
 class UserHelper(RedisBase):
     """
@@ -111,7 +113,7 @@ class UserHelper(RedisBase):
         @return: the queried user object or None if not found
         @rtype: User
         """
-        user_id = self.redis.get(self.__set_user_string(User.EMAIL_KEY, email))
+        user_id = self.redis.get(self.__set_user_string(email, User.USER_ID_KEY))
         return self.get_user_by_id(user_id)
 
 
@@ -124,7 +126,7 @@ class UserHelper(RedisBase):
         @rtype: User
         """
 
-        user_id = self.redis.get(self.__set_user_string(User.USERNAME_KEY, username))
+        user_id = self.redis.get(self.__set_user_string(username, User.USER_ID_KEY))
         return self.get_user_by_id(user_id)
 
     def user_id_exists(self, user_id=None):
@@ -184,7 +186,7 @@ class UserHelper(RedisBase):
         else:
             user = self.get_user_by_username(username)
 
-        to_delete = map(lambda (k,v): (self.__set_user_string(user.id, k)), user.items())
+        to_delete = map(lambda (k, v): (self.__set_user_string(user.id, k)), user.items())
         to_delete += (self.__set_user_string(user.username, User.USER_ID_KEY),
                       self.__set_user_string(user.email, User.USER_ID_KEY),
                       self.__set_user_string(user.id, User.FOLLOWING_ID_KEY),
@@ -270,6 +272,10 @@ class UserHelper(RedisBase):
         """
         if not salt:
             salt = UserHelper.generate_salt()
+        if password is not bytes:
+            password = bytes(password)
+        if salt is not bytes:
+            salt = bytes(salt)
         return scrypt.hash(password, salt)
 
     @staticmethod
@@ -319,6 +325,7 @@ class UserHelper(RedisBase):
         @rtype : int
         """
         return self.redis.incr(self.__NEXT_USER_KEY)
+
 
 class MessageHelper(object):
     """
