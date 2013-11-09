@@ -42,6 +42,7 @@ class RedisTests(unittest.TestCase):
         """
         Test adding and getting a follower
         """
+        self.dbh.add_user(self.user)
         self.dbh.add_follower(2, self.user.id)
         followers = self.dbh.get_follower_ids(self.user.id)
         self.assertTrue('2' in followers)

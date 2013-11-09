@@ -13,7 +13,8 @@ class RedisBase(object):
         self.redis = redis_connection
 
 
-    def _set_key_string(self, primary_key, *secondary_keys):
+    @staticmethod
+    def _set_key_string(primary_key, *secondary_keys):
         """
         Binds lookup keys to a string to query in redis.
         Examples:
@@ -28,7 +29,6 @@ class RedisBase(object):
         @rtype: str
         """
         query = ':'.join((primary_key,) + secondary_keys)
-        test = 1
         return query
 
 class UserHelper(RedisBase):
@@ -190,6 +190,7 @@ class UserHelper(RedisBase):
                       self.__set_user_string(user.id, User.FOLLOWING_ID_KEY),
                       self.__set_user_string(user.id, User.FOLLOWERS_ID_KEY))
 
+        # TODO: remove the user from anyone that was following them as well
         with self.redis.pipeline() as trans:
             trans.delete(*to_delete)
             result = trans.execute()
@@ -242,7 +243,6 @@ class UserHelper(RedisBase):
         self.redis.sadd(self.__set_user_string(user_id, User.FOLLOWING_ID_KEY), follow_id)
         # Also add the follower since the user is now following this person
         self.redis.sadd(self.__set_user_string(follow_id, User.FOLLOWERS_ID_KEY), user_id)
-
 
 
     def get_post_id_range(self, start_post_id, end_post_id, user_id=None):
