@@ -1,11 +1,37 @@
 # coding=utf-8
 import os
-from redis import StrictRedis
+from redis import StrictRedis, WatchError
 from models.user import User
 import scrypt
 
+class RedisBase(object):
+    """
+    Base helper class for redis communication
+    """
 
-class UserHelper(object):
+    def __init__(self, redis_connection):
+        self.redis = redis_connection
+
+
+    @staticmethod
+    def _set_key_string(primary_key, *secondary_keys):
+        """
+        Binds lookup keys to a string to query in redis.
+        Examples:
+        __set_key_string('user', 'id', email') returns 'user:id:email'
+        __set_key_string('user', 'id') returns 'user:id'
+
+        @param primary_key: required main key to look up or set a value in redis (ex: 'user')
+        @type: str
+        @param secondary_keys: required subkey to look up or set a value in redis (ex: 'id')
+        @type: ()
+        @return: The previous entry for the key being set or None if no previous entry exists
+        @rtype: str
+        """
+        query = ':'.join((primary_key,) + secondary_keys)
+        return query
+
+class UserHelper(RedisBase):
     """
     Handles user queries to redis
 
@@ -20,11 +46,10 @@ class UserHelper(object):
     # used to reference a key + value belonging to a specific user
     # order of the format is (user_id, user_attribute_key_name)
     # example: user:id:email = 'yarly@or.ly'
-    __USER_ID_STRING_KEY = 'user:%s:%s'
+    __QUERY_STRING = 'user'
 
     def __init__(self, redis_connection, user_id=None):
-        self.redis = redis_connection
-        # get the next unused id for the user to be inserted
+        super(UserHelper, self).__init__(redis_connection)
         if not user_id:
             self.user_id = self.__next_user_id()
         else:
@@ -38,18 +63,20 @@ class UserHelper(object):
         @return: the redis bound result after adding
         """
         twit_user.id = self.user_id
-        trans = self.redis.pipeline()
-
-        for key, value in twit_user.items():
-            if value == twit_user.password:
-                value = UserHelper.hash_password(twit_user.password)
-            trans.set(self.__set_user_string(twit_user.id, key), value)
-
-        trans.set(self.__set_user_string(twit_user.username, User.USER_ID_KEY), twit_user.id)
+        username_key = self.__set_user_string(twit_user.username, User.USER_ID_KEY)
         email_key = self.__set_user_string(twit_user.email, User.USER_ID_KEY)
-        trans.set(email_key, twit_user.id)
 
-        result = trans.execute()
+        # TODO: use MSET instead of SET
+        with self.redis.pipeline() as trans:
+            trans.set(username_key, twit_user.id)
+            trans.set(email_key, twit_user.id)
+
+            for key, value in twit_user.items():
+                if value == twit_user.password:
+                    value = UserHelper.hash_password(twit_user.password, twit_user.salt)
+                trans.set(self.__set_user_string(twit_user.id, key), value)
+
+            result = trans.execute()
         return result
 
     # TODO: get user by email and get user by username
@@ -70,7 +97,7 @@ class UserHelper(object):
             return None
 
         user = User()
-
+        # TODO: use MGET instead of GET
         for key, value in user.items():
             user[key] = self.redis.get(self.__set_user_string(str(user_id), key))
 
@@ -146,8 +173,8 @@ class UserHelper(object):
         @raise ValueError, ConnectionError: If something cannot be deleted or cannot connect to redis
         """
         if not user_id and not email and not username:
-            raise ValueError('One of these parameters: user_id, email or username must not be empty')
-
+            raise ValueError('At least one of these parameters: (%s, %s or %s) must not be empty'
+                             % (User.USER_ID_KEY, User.EMAIL_KEY, User.USERNAME_KEY))
         user = User()
 
         if user_id:
@@ -159,10 +186,76 @@ class UserHelper(object):
 
         to_delete = map(lambda (k,v): (self.__set_user_string(user.id, k)), user.items())
         to_delete += (self.__set_user_string(user.username, User.USER_ID_KEY),
-                      self.__set_user_string(user.email, User.USER_ID_KEY))
+                      self.__set_user_string(user.email, User.USER_ID_KEY),
+                      self.__set_user_string(user.id, User.FOLLOWING_ID_KEY),
+                      self.__set_user_string(user.id, User.FOLLOWERS_ID_KEY))
 
-        result = self.redis.delete(*to_delete)
+        # TODO: remove the user from anyone that was following them as well
+        with self.redis.pipeline() as trans:
+            trans.delete(*to_delete)
+            result = trans.execute()
         return result
+
+    def add_follower(self, follower_id, user_id=None):
+        """
+        Adds a follower to a user.
+
+        @param follower_id: The user id of the follower to add to this user
+        @type follower_id: int
+        @param user_id: The user id to add the follower to
+        @type user_id: int
+        """
+        if not user_id:
+            user_id = self.user_id
+        self.redis.sadd(self.__set_user_string(user_id, User.FOLLOWERS_ID_KEY), follower_id)
+        # Also add user to the following user's people they follow set
+        self.redis.sadd(self.__set_user_string(follower_id, User.FOLLOWING_ID_KEY), user_id)
+
+
+        #elif value is list():
+        #    self.redis.lpush(self.__set_user_string(twit_user.id, key), value)
+        #elif value is dict():
+        #    self.redis.zadd(self.__set_user_string(twit_user.id, key), value)
+
+    def get_follower_ids(self, user_id=None):
+        """
+        Fetches a set of all follower user ids for a user
+        @param user_id: user whose follower ids should be queried
+        @type user_id: int
+        @return: set of all follower ids for the user
+        @rtype: set
+        """
+        if not user_id:
+            user_id = self.user_id
+        return self.redis.smembers(self.__set_user_string(user_id, User.FOLLOWERS_ID_KEY))
+
+    def add_following(self, follow_id, user_id=None):
+        """
+        Adds a user to follow to the current user
+
+        @param follow_id: The user id of the person to follow
+        @type follow_id: int
+        @param user_id: The user id of the person wanting to follow someone
+        @type user_id: int
+        """
+        if not user_id:
+            user_id = self.user_id
+        self.redis.sadd(self.__set_user_string(user_id, User.FOLLOWING_ID_KEY), follow_id)
+        # Also add the follower since the user is now following this person
+        self.redis.sadd(self.__set_user_string(follow_id, User.FOLLOWERS_ID_KEY), user_id)
+
+
+    def get_post_id_range(self, start_post_id, end_post_id, user_id=None):
+        """
+        Gets the user post ids within a range
+        @param user_id: user id to get post ids from
+        @type user_id: int
+        @return: list of all user posts within the start/end range
+        @rtype: list
+        """
+        if not user_id:
+            user_id = self.user_id
+        return self.redis.lrange(self.__set_user_string(user_id, User.POSTS_ID_KEY), start_post_id, end_post_id)
 
     @staticmethod
     def hash_password(password, salt=''):
@@ -177,7 +270,7 @@ class UserHelper(object):
         """
         if not salt:
             salt = UserHelper.generate_salt()
-        return scrypt.hash(bytes(password), salt)
+        return scrypt.hash(password, salt)
 
     @staticmethod
     def generate_salt(length=24):
@@ -208,7 +301,7 @@ class UserHelper(object):
         """
 
         @param first_key:
-        @type first_key: str
+        @type first_key: str, int
         @param second_key:
         @type second_key: str
         @return: The previous entry for the key being set or None if no previous entry exists
@@ -217,7 +310,7 @@ class UserHelper(object):
 
         if not first_key:
             first_key = self.user_id
-        return self.__USER_ID_STRING_KEY % (first_key, second_key)
+        return self._set_key_string(self.__QUERY_STRING, str(first_key), second_key)
 
     def __next_user_id(self):
         """
