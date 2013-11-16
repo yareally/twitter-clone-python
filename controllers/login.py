@@ -1,4 +1,4 @@
-from flask import request, render_template, session
+from flask import request, render_template, session, redirect, url_for
 from redis import StrictRedis
 from libs.rediswrapper import UserHelper
 import lepl.apps.rfc3696
@@ -33,12 +33,14 @@ def login(app):
             user = dbh.get_user_by_email(request.form['name'])
         elif dbh.username_exists(name):
             user = dbh.get_user_by_username(request.form['name'])
-        if user != '':
+        if user:
             hashed_password = UserHelper.hash_password(password, user.salt)
             if hashed_password == user.password:
                 # Save the user to the session
-                session['user'] = user.__str__()
-                return render_template('dash.html', title='Welcome to Twic')
+                session['user'] = user.get_dict()
+                session['logged_in'] = True
+                return redirect(url_for('dash'))
+
         else:
             error.append('That user does not exist.')
 

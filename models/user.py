@@ -1,6 +1,7 @@
 # coding=utf-8
 
 import os
+
 # deal with < Python 3.3 where cPickle was not merged
 try:
     import cPickle as pickle
@@ -8,6 +9,7 @@ except ImportError:
     import pickle
 
 class User(object):
+
     """
 
     @param username:
@@ -25,15 +27,22 @@ class User(object):
     FOLLOWERS_ID_KEY = 'followers'
     FOLLOWING_ID_KEY = 'following'
     POSTS_ID_KEY = 'posts'
+    USER_HOME_URL = 'dash/%s'
 
     def __init__(self, username='', email='', password='', name='', salt=''):
+        # import here to avoid circular dependency conflicts
+        from libs.rediswrapper import UserHelper
         self._values = dict()
 
-        self._values[self.USERNAME_KEY] = username
+        self._values[self.USERNAME_KEY] = username.lower()
         self._values[self.EMAIL_KEY] = email
         self._values[self.NAME_KEY] = name
-        self._values[self.PASS_KEY] = bytes(password)
         self._values[self.SALT_KEY] = salt if salt else bytes(os.urandom(24).encode('base_64'))
+        # if we already have a salt, then we can assume this user already exists
+        # if the user doesn't exist, we can hash the password since it's in plaintext right now
+        self._values[self.PASS_KEY] = bytes(password) if salt else UserHelper.hash_password(password,
+                                                                                            self._values[
+                                                                                                self.SALT_KEY])
         self._values[self.USER_ID_KEY] = 0
 
         self.followers = set()
@@ -79,6 +88,9 @@ class User(object):
         @rtype: dict
         """
         return self._values.items()
+
+    def get_dict(self):
+        return self._values
 
     @staticmethod
     def load_user(pickled_user):

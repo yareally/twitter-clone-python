@@ -3,6 +3,7 @@ import os
 from redis import StrictRedis
 from controllers.register import register as reg_controller
 from controllers.login import login as login_controller
+from controllers.dash import dash as dash_controller
 
 app = Flask(__name__)
 app.secret_key = '\x1c\xba\x97jT\xf1\xdb\x92S\xd7\x83\x0f{\xa3#\xf3\x9fg\xf3;\x96D\x01\x98'
@@ -14,7 +15,7 @@ def dash(page_name=None):
     #if session['user']:
         #return render_template('dash.html', page_name='dash')
     #else:
-    return render_template('dash.html', page_name='dash')
+    return dash_controller(app)
 
 @app.route('/login', methods=['POST', 'GET'])
 def login(page_name=None):
@@ -24,7 +25,10 @@ def login(page_name=None):
 def registration(page_name=None):
     return reg_controller(app)
 
-
+@app.route('/logout', methods=['POST', 'GET'])
+def logout(page_name=None):
+    session.clear()
+    return login_controller(app)
 
 @app.route('/async-demo')
 def async_route(page_name=None):

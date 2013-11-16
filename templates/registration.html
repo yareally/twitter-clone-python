@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 {% block title %}{{ title }}{% endblock %}
-{% block logout %}Logout{% endblock %}
-{% block user %}Doug Moreland{% endblock %}
+{% if session.logged_in %}
+    {% block logout %}Logout{% endblock %}
+    {% block user %}Doug Moreland{% endblock %}
+{% endif %}
 {% block page_name %}registration{% endblock %}
 {% block content %}
 <div class="panel panel-default">

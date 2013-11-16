@@ -32,7 +32,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class=""><a href="{{ url_for('dash') }}">Home</a></li>
-                    <li class=""><a href="#">Settings</a></li>
+                    {#<li class=""><a href="#">Settings</a></li>#}
                     <!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Menu <b
                                                 class="caret"></b></a>
                                             <ul class="dropdown-menu">
@@ -45,8 +45,26 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ url_for('login') }}">{% block logout %}{% endblock %} Login</a></li>
-                    <li><a href="{{ url_for('registration') }}">{% block user %}{% endblock %} Register</a></li>
+                    <li>
+                        {% block logout %}{% endblock %}
+                        {% if not session.logged_in %}
+                            <a href="{{ url_for('login') }}">
+                            Login
+                        {% else %}
+                            <a href="{{ url_for('logout') }}">
+                            Logout
+                        {% endif %}
+                    </a></li>
+                    <li>{% block user %}{% endblock %}
+                        {% if not session.logged_in %}
+                            <a href="{{ url_for('registration') }}">
+                            Register
+                        {% else %}
+                            <a href="{{ url_for('dash') }}">
+
+                            {{ session['user']['name'] }}
+                        {% endif %}
+                    </a></li>
                 </ul>
                 <form action="{{ url_for('login') }}" class="navbar-form navbar-right" method="post">
                     <button type="submit" class="btn btn-primary ">Search</button>

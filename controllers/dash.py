@@ -1,4 +1,4 @@
-__author__ = 'tony'
+# coding=utf-8
 from flask import Flask, request, render_template, session
 from redis import StrictRedis
 import os
@@ -6,7 +6,7 @@ from libs.rediswrapper import UserHelper
 from models.user import User
 
 
-def register(app):
+def dash(app):
     """
 
     @param app:
@@ -16,7 +16,10 @@ def register(app):
     """
 
     if request.method == 'GET':
-        return render_template('registration.html', error=None, title='Twic Registration')
+        if session.has_key('user'):
+            return render_template('dash.html', error=None, title='Twic Dashboard')
+        else:
+            return render_template('login.html', error='Please log in', title='Login')
     elif request.method == 'POST':
         error = list()
         name = request.form['name']
@@ -37,9 +40,5 @@ def register(app):
             return render_template('registration.html', error=error, title='Twic Registration', user=user)
         else:
             dbh.add_user(user)
-            session['user'] = user.get_dict()
-            session['logged_in'] = True
+            session['user'] = user.__str__()
             return render_template('dash.html', title='Twic Registration')
-
-
-

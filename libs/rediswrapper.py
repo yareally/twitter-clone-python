@@ -1,13 +1,17 @@
 # coding=utf-8
+import math
 import os
 from redis import StrictRedis, WatchError
+import time
+import uuid
 from models.user import User
+from models.message import Message
 import scrypt
-
 
 class RedisBase(object):
     """
     Base helper class for redis communication
+    @type redis_connection: redis.client.StrictRedis
     """
 
     def __init__(self, redis_connection):
@@ -15,7 +19,7 @@ class RedisBase(object):
 
 
     @staticmethod
-    def _set_key_string(primary_key, *secondary_keys):
+    def _set_key_string(primary_key, secondary_key):
         """
         Binds lookup keys to a string to query in redis.
         Examples:
@@ -24,14 +28,72 @@ class RedisBase(object):
 
         @param primary_key: required main key to look up or set a value in redis (ex: 'user')
         @type: str
-        @param secondary_keys: required subkey to look up or set a value in redis (ex: 'id')
-        @type: ()
+        @param secondary_key: required subkey to look up or set a value in redis (ex: 'id')
+        @type: str
         @return: The previous entry for the key being set or None if no previous entry exists
         @rtype: str
         """
-        query = ':'.join((primary_key,) + secondary_keys)
+
+        query =  '%s:%s' % (primary_key, secondary_key)
         return query
 
+    def _lock_with_timeout(self, name, acquire_timeout=10, lock_timeout=10):
+        """
+        Sets a database lock with a timeout in case the user does not unlock it
+        @param name: name for the lock
+        @type name: str
+        @param acquire_timeout: time in seconds to wait for the lock to be set or time out if not
+        @type acquire_timeout: int
+        @param lock_timeout: time in seconds to tell redis to hold the lock
+        @type lock_timeout: int
+        @return: the lock id if it's set or None if not
+        @rtype: int
+        """
+
+        lock_id = str(uuid.uuid4())
+        release_time = time.time() + acquire_timeout
+        lock_timeout = int(math.ceil(lock_timeout))
+
+        while time.time() < release_time:
+            if self.redis.setnx(name, lock_id):
+                self.redis.expire(name, lock_timeout)
+                return lock_id
+            elif not self.redis.ttl(name):
+                self.redis.expire(name, lock_timeout)
+
+            time.sleep(.001)
+        return None
+
+    def _release_lock(self, name, lock_id):
+        """
+        Releases a lock if it still exists
+        @param name: name of the lock to release
+        @type name: str
+        @param lock_id: id of the lock to release
+        @type lock_id: int
+        @return: True if released, false if not
+        @rtype: bool
+        """
+        with self.redis.pipeline() as trans:
+            name = '%s:' % name
+
+            while True:
+                try:
+                    trans.watch(name)
+
+                    if trans.get(name) == lock_id:
+                        trans.multi()
+                        trans.delete(name)
+                        trans.execute()
+                        return True
+
+                    trans.unwatch()
+                    break
+                except WatchError:
+                    # someone was screwing with the lock, try again
+                    pass
+                    # lock was lost
+        return False
 
 class UserHelper(RedisBase):
     """
@@ -48,7 +110,7 @@ class UserHelper(RedisBase):
     # used to reference a key + value belonging to a specific user
     # order of the format is (user_id, user_attribute_key_name)
     # example: user:id:email = 'yarly@or.ly'
-    __QUERY_STRING = 'user'
+    _QUERY_STRING = 'user'
 
     def __init__(self, redis_connection, user_id=None):
         super(UserHelper, self).__init__(redis_connection)
@@ -64,21 +126,23 @@ class UserHelper(RedisBase):
         @type twit_user: User
         @return: the redis bound result after adding
         """
+        username_lock = self.__set_user_string(twit_user.username)
+        email_lock = self.__set_user_string(twit_user.email)
+        username_lock_id = self._lock_with_timeout(username_lock, 1)
+        email_lock_id = self._lock_with_timeout(email_lock, 1)
+
+        if not username_lock_id or self.username_exists(twit_user.username):
+            return None
+
         twit_user.id = self.user_id
-        username_key = self.__set_user_string(twit_user.username, User.USER_ID_KEY)
-        email_key = self.__set_user_string(twit_user.email, User.USER_ID_KEY)
 
-        # TODO: use MSET instead of SET
         with self.redis.pipeline() as trans:
-            trans.set(username_key, twit_user.id)
-            trans.set(email_key, twit_user.id)
-
-            for key, value in twit_user.items():
-                if value == twit_user.password:
-                    value = UserHelper.hash_password(twit_user.password, twit_user.salt)
-                trans.set(self.__set_user_string(twit_user.id, key), value)
-
+            trans.hset(self._QUERY_STRING, twit_user.username, twit_user.id)
+            trans.hset(self._QUERY_STRING, twit_user.email, twit_user.id)
+            trans.hmset(self.__set_user_string(twit_user.id), twit_user.get_dict())
             result = trans.execute()
+            self._release_lock(username_lock, username_lock_id)
+            self._release_lock(email_lock, email_lock_id)
         return result
 
     # TODO: get user by email and get user by username
@@ -99,10 +163,7 @@ class UserHelper(RedisBase):
             return None
 
         user = User()
-        # TODO: use MGET instead of GET
-        for key, value in user.items():
-            user[key] = self.redis.get(self.__set_user_string(str(user_id), key))
-
+        user._values = self.redis.hgetall(self.__set_user_string(str(user_id)))
         return user
 
     def get_user_by_email(self, email):
@@ -113,7 +174,7 @@ class UserHelper(RedisBase):
         @return: the queried user object or None if not found
         @rtype: User
         """
-        user_id = self.redis.get(self.__set_user_string(email, User.USER_ID_KEY))
+        user_id = self.redis.hget(self._QUERY_STRING, email)
         return self.get_user_by_id(user_id)
 
 
@@ -126,7 +187,7 @@ class UserHelper(RedisBase):
         @rtype: User
         """
 
-        user_id = self.redis.get(self.__set_user_string(username, User.USER_ID_KEY))
+        user_id = self.redis.hget(self._QUERY_STRING, username)
         return self.get_user_by_id(user_id)
 
     def user_id_exists(self, user_id=None):
@@ -139,7 +200,7 @@ class UserHelper(RedisBase):
         """
         if not user_id:
             user_id = self.user_id
-        return self.redis.get(self.__set_user_string(str(user_id), User.USER_ID_KEY))
+        return self.redis.exists(self.__set_user_string(user_id))
 
     def email_exists(self, email):
         """
@@ -149,7 +210,7 @@ class UserHelper(RedisBase):
         @return: True if the email exists in the db
         @rtype: bool
         """
-        result = self.__user_property_exists(email, User.USER_ID_KEY)
+        result = self.redis.hget(self._QUERY_STRING, email)
         return result
 
     def username_exists(self, username):
@@ -160,7 +221,7 @@ class UserHelper(RedisBase):
         @return: True if the username exists in the db
         @rtype: bool
         """
-        return self.__user_property_exists(username, User.USER_ID_KEY)
+        return self.redis.hget(self._QUERY_STRING, username)
 
     def delete_user(self, user_id='', email='', username=''):
         """
@@ -172,7 +233,7 @@ class UserHelper(RedisBase):
         @param username:
         @type username: str
         @return redis bound result from deletion
-        @raise ValueError, ConnectionError: If something cannot be deleted or cannot connect to redis
+        @raise ValueError, ConnectionError: If no user params were defined or cannot connect to redis
         """
         if not user_id and not email and not username:
             raise ValueError('At least one of these parameters: (%s, %s or %s) must not be empty'
@@ -186,16 +247,20 @@ class UserHelper(RedisBase):
         else:
             user = self.get_user_by_username(username)
 
-        to_delete = map(lambda (k, v): (self.__set_user_string(user.id, k)), user.items())
-        to_delete += (self.__set_user_string(user.username, User.USER_ID_KEY),
-                      self.__set_user_string(user.email, User.USER_ID_KEY),
-                      self.__set_user_string(user.id, User.FOLLOWING_ID_KEY),
-                      self.__set_user_string(user.id, User.FOLLOWERS_ID_KEY))
+        lock_name = self.__set_user_string('del:%s' % user.id)
+        # TODO: ensure no actions are done on this user once it is in the process of being deleted
+        lock_id = self._lock_with_timeout(lock_name, 30)
+
+        if not lock_id:
+            return None
 
         # TODO: remove the user from anyone that was following them as well
         with self.redis.pipeline() as trans:
-            trans.delete(*to_delete)
+            trans.hdel(self._QUERY_STRING, user.email, user.username)
+            trans.delete(self.__set_user_string(user.id))
             result = trans.execute()
+            self._release_lock(lock_name, lock_id)
+
         return result
 
     def add_follower(self, follower_id, user_id=None):
@@ -209,9 +274,9 @@ class UserHelper(RedisBase):
         """
         if not user_id:
             user_id = self.user_id
-        self.redis.sadd(self.__set_user_string(user_id, User.FOLLOWERS_ID_KEY), follower_id)
+        self.redis.sadd(self.__set_user_string(user_id), follower_id)
         # Also add user to the following user's people they follow set
-        self.redis.sadd(self.__set_user_string(follower_id, User.FOLLOWING_ID_KEY), user_id)
+        self.redis.sadd(self.__set_user_string(follower_id), user_id)
 
 
         #elif value is list():
@@ -229,7 +294,7 @@ class UserHelper(RedisBase):
         """
         if not user_id:
             user_id = self.user_id
-        return self.redis.smembers(self.__set_user_string(user_id, User.FOLLOWERS_ID_KEY))
+        return self.redis.smembers(self.__set_user_string(user_id))
 
     def add_following(self, follow_id, user_id=None):
         """
@@ -242,9 +307,9 @@ class UserHelper(RedisBase):
         """
         if not user_id:
             user_id = self.user_id
-        self.redis.sadd(self.__set_user_string(user_id, User.FOLLOWING_ID_KEY), follow_id)
+        self.redis.sadd(self.__set_user_string(user_id), follow_id)
         # Also add the follower since the user is now following this person
-        self.redis.sadd(self.__set_user_string(follow_id, User.FOLLOWERS_ID_KEY), user_id)
+        self.redis.sadd(self.__set_user_string(follow_id), user_id)
 
 
     def get_post_id_range(self, start_post_id, end_post_id, user_id=None):
@@ -257,7 +322,7 @@ class UserHelper(RedisBase):
         """
         if not user_id:
             user_id = self.user_id
-        return self.redis.lrange(self.__set_user_string(user_id, User.POSTS_ID_KEY), start_post_id, end_post_id)
+        return self.redis.lrange(self.__set_user_string(user_id), start_post_id, end_post_id)
 
     @staticmethod
     def hash_password(password, salt=''):
@@ -290,33 +355,29 @@ class UserHelper(RedisBase):
         salt = bytes(os.urandom(length).encode('base_64'))
         return salt
 
-    def __user_property_exists(self, first_key, second_key):
+    def __user_property_exists(self, first_key):
         """
 
         @param first_key: Name of the stored key to check against in redis
         @type first_key: str
-        @param second_key:
-        @type second_key: str
         @rtype: bool
         """
-        lookup_key = self.__set_user_string(first_key, second_key)
+        lookup_key = self.__set_user_string(first_key)
         result = self.redis.get(lookup_key)
         return result is not None
 
-    def __set_user_string(self, first_key=None, second_key=''):
+    def __set_user_string(self, first_key=None):
         """
 
         @param first_key:
         @type first_key: str, int
-        @param second_key:
-        @type second_key: str
         @return: The previous entry for the key being set or None if no previous entry exists
         @rtype: str
         """
 
         if not first_key:
             first_key = self.user_id
-        return self._set_key_string(self.__QUERY_STRING, str(first_key), second_key)
+        return self._set_key_string(self._QUERY_STRING, str(first_key))
 
     def __next_user_id(self):
         """
@@ -326,10 +387,86 @@ class UserHelper(RedisBase):
         """
         return self.redis.incr(self.__NEXT_USER_KEY)
 
-
-class MessageHelper(object):
+class MessageHelper(RedisBase):
     """
     Handles message queries to redis
+    @param redis_connection: The redis connection
+    @type redis_connection: StrictRedis
+    @param msg_id: id for the message
+    @type msg_id: int
     """
+    _QUERY_STRING = 'message'
+    __NEXT_MSG_KEY = 'next.msg.id'
 
-    _USER_MSG_STRING_KEY = 'user:%d:%s'
+    def __init__(self, redis_connection, msg_id=None):
+        super(MessageHelper, self).__init__(redis_connection)
+        if not msg_id:
+            self.msg_id = self.__next_msg_id()
+        else:
+            self.msg_id = msg_id
+
+
+    def post_message(self, msg):
+        """
+        Creates a new message for a user
+        @param msg: The message model object
+        @type msg: Message
+        @return: the result of adding the message
+        """
+        msg.id = self.msg_id
+
+        with self.redis.pipeline() as trans:
+            trans.rpush(self._set_key_string(UserHelper._QUERY_STRING, User.POSTS_ID_KEY), msg.id)
+            trans.hmset(self.__set_msg_string(msg.id), msg.get_dict())
+            #trans.hset(self.__set_msg_string(msg.id, Message.FAV_KEY), msg.favorited)
+            #trans.hset(self.__set_msg_string(msg.id, Message.RT_KEY), msg.retweeted)
+            #trans.hset(self.__set_msg_string(msg.id, Message.REPLY_KEY), msg.replies)
+            #trans.hset(self.__set_msg_string(msg.id, Message.URL_KEY), msg.urls)
+            #trans.hset(self.__set_msg_string(msg.id, Message.HT_KEY), msg.hashtags)
+            # TODO: keep track of how many times a trend is used and whatever as its own hashtable
+            result = trans.execute()
+        return result
+
+    def get_message(self, msg_id):
+        """
+
+        @param msg_id:
+        @type msg_id: int
+        @return:
+        @rtype: Message
+        """
+        if not msg_id:
+            msg_id = self.msg_id
+
+        with self.redis.pipeline() as trans:
+            message = Message(0, '')
+            trans.hgetall(self.__set_msg_string(msg_id))
+            message._values = trans.execute()[0]
+
+        return message
+
+    def __set_msg_string(self, first_key=None, second_key=None):
+        """
+
+        @param first_key:
+        @type first_key: str, int
+        @return: The previous entry for the key being set or None if no previous entry exists
+        @rtype: str
+        """
+
+        if not first_key:
+            first_key = self.msg_id
+
+        if second_key:
+            first_key = '%s:%s' % (first_key, second_key)
+
+        return self._set_key_string(self._QUERY_STRING, str(first_key))
+
+
+    def __next_msg_id(self):
+        """
+        Get the next msg id from the db
+
+        @rtype : int
+        """
+        return self.redis.incr(self.__NEXT_MSG_KEY)
