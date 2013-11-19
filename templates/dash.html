@@ -6,7 +6,11 @@
     <div class="col-xs-4"> <!-- user panel -->
         <div class="row"> <!-- username -->
             <div class="col-xs-12">
-                <a href="#"><h4>Doug Moreland</h4></a>
+                {% if not session.logged_in %}
+                    <a href="#"><h4> No User </h4></a>
+                {% else %}
+                    <a href="#"><h4> {{ session['user']['name'] + ' ' + '@' + session['user']['username'] }} </h4></a>
+                {% endif %}
             </div>
         </div>
         <div class="btn-group row">

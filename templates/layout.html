@@ -62,7 +62,7 @@
                         {% else %}
                             <a href="{{ url_for('dash') }}">
 
-                            {{ session['user']['name'] }}
+                            {{ '@' + session['user']['username'] }}
                         {% endif %}
                     </a></li>
                 </ul>
