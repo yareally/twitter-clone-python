@@ -31,7 +31,7 @@ class Message(object):
     """
 
     MSG_ID_KEY = 'id'
-    USER_ID_KEY = 'id'
+    USER_ID_KEY = 'user_id'
     MSG_KEY = 'message'
     POST_KEY = 'posted'
     FAV_KEY = 'favorite_by'
@@ -81,7 +81,7 @@ class Message(object):
         @param value: The id for the message
         @type value: int
         """
-        self._values[self.USER_ID_KEY] = value
+        self._values[self.MSG_ID_KEY] = value
 
     @property
     def user_id(self):

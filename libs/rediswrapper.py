@@ -124,7 +124,8 @@ class UserHelper(RedisBase):
 
         @param twit_user:
         @type twit_user: User
-        @return: the redis bound result after adding
+        @return: the user id of the inserted user or None if errors
+        @rtype int
         """
         username_lock = self.__set_user_string(twit_user.username)
         email_lock = self.__set_user_string(twit_user.email)
@@ -143,7 +144,7 @@ class UserHelper(RedisBase):
             result = trans.execute()
             self._release_lock(username_lock, username_lock_id)
             self._release_lock(email_lock, email_lock_id)
-        return result
+        return twit_user.id if result else None
 
     # TODO: get user by email and get user by username
 
@@ -416,7 +417,7 @@ class MessageHelper(RedisBase):
         msg.id = self.msg_id
 
         with self.redis.pipeline() as trans:
-            trans.rpush(self._set_key_string(UserHelper._QUERY_STRING, User.POSTS_ID_KEY), msg.id)
+            trans.rpush(self._set_key_string('%s:%s' % (UserHelper._QUERY_STRING, msg.user_id), User.POSTS_ID_KEY), msg.id)
             trans.hmset(self.__set_msg_string(msg.id), msg.get_dict())
             #trans.hset(self.__set_msg_string(msg.id, Message.FAV_KEY), msg.favorited)
             #trans.hset(self.__set_msg_string(msg.id, Message.RT_KEY), msg.retweeted)
@@ -425,6 +426,7 @@ class MessageHelper(RedisBase):
             #trans.hset(self.__set_msg_string(msg.id, Message.HT_KEY), msg.hashtags)
             # TODO: keep track of how many times a trend is used and whatever as its own hashtable
             result = trans.execute()
+            self.msg_id = self.__next_msg_id() if result else self.msg_id
         return result
 
     def get_message(self, msg_id):
@@ -444,6 +446,37 @@ class MessageHelper(RedisBase):
             message._values = trans.execute()[0]
 
         return message
+
+    def get_user_messages(self, user_id, start_range=0, end_range=-1):
+        """
+        Returns the messages for a user within a range.
+
+        Example: if start_range = 0, end_range = 9 then it returns the first 10
+        messages ever posted by this user (remember it's len - 1 like arrays)
+
+        @param user_id: id of the user to get messages
+        @type user_id: int
+        @param start_range: by default, gets the first message ever posted
+        @type start_range: int
+        @param end_range: by default, gets up to the last message ever posted
+        @type end_range: int
+        @return: all messages within the given range for a user
+        @rtype: list
+        """
+
+        msg_ids = self.redis.lrange(
+            self._set_key_string('%s:%s' % (UserHelper._QUERY_STRING, user_id), User.POSTS_ID_KEY),
+            start_range,
+            end_range)
+
+        messages = list()
+
+        with self.redis.pipeline() as trans:
+            for msg_id in msg_ids:
+                trans.hgetall(self.__set_msg_string(msg_id))
+
+            messages = trans.execute()
+        return messages
 
     def __set_msg_string(self, first_key=None, second_key=None):
         """
