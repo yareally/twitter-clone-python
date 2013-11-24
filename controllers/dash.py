@@ -17,6 +17,7 @@ def dash(app):
 
     if request.method == 'GET':
         if session.has_key('user'):
+
             return render_template('dash.html', error=None, title='Twic Dashboard')
         else:
             return render_template('login.html', error='Please log in', title='Login')
