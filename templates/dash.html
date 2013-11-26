@@ -56,8 +56,23 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><h4>Twics</h4></div>
                 <div class="panel-body">
-
+                {% if messages %}
+                    <p>Current Session User Id: {{ session['user']['id'] }}</p>
+                    {% for message in messages %}
+                        <ul>
+                            <li><h4><a href="#">{{ message.user_id }}</a> <a href="#">{{ message.user_id }}</a></h4></li>
+                            <li><p>{{ message.message }}</p></li>
+                            <li>
+                                <a href="#"><span class="glyphicon glyphicon-eye-open"> View</span></a>
+                                <a href="#"> <span class="glyphicon glyphicon-share-alt"> Reply</span></a>
+                                <a href="#"> <span class="glyphicon glyphicon-retweet"> Retwic</span></a>
+                                <a href="#"> <span class="glyphicon glyphicon-heart"> Favorite</span></a>
+                            </li>
+                        </ul>
+                    {% endfor %}
+                {% endif %}
                     <ul>
+
                         <li><h4><a href="#">MLB</a> <a href="#">@MLB</a></h4>
                         </li>
 
