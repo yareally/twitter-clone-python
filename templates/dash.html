@@ -27,8 +27,10 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="input-group">
-                    <textarea placeholder="Compose Twic" class="form-control"></textarea>
-                    <button class="btn btn-primary">POST</button>
+                    <form action="{{ url_for('add_message') }}" method="post">
+                        <textarea placeholder="Compose Twic" class="form-control" name="message"></textarea>
+                        <button class="btn btn-primary">POST</button>
+                    </form>
 
                 </div>
             </div>
@@ -57,7 +59,6 @@
                 <div class="panel-heading"><h4>Twics</h4></div>
                 <div class="panel-body">
                 {% if messages %}
-                    <p>Current Session User Id: {{ session['user']['id'] }}</p>
                     {% for message in messages %}
                         <ul>
                             <li><h4><a href="#">{{ message.user_id }}</a> <a href="#">{{ message.user_id }}</a></h4></li>
@@ -71,54 +72,6 @@
                         </ul>
                     {% endfor %}
                 {% endif %}
-                    <ul>
-
-                        <li><h4><a href="#">MLB</a> <a href="#">@MLB</a></h4>
-                        </li>
-
-                        <li><p>Alex Rodriguez says that he is addicted to Meth but that he thought his
-                            dealer was a Doctor <a href="#" class="hashtag">#Clueless</a> <a href="#"
-                                                                                             class="hashtag">#SleeplessInNewYork</a>
-                        </p></li>
-                        <li><a href="#"><span
-                            class="glyphicon glyphicon-eye-open"> View</span></a><a href="#"> <span
-                            class="glyphicon glyphicon-share-alt"> Reply</span></a><a href="#"> <span
-                            class="glyphicon glyphicon-retweet"> Retwic</span></a><a
-                            href="#"> <span
-                            class="glyphicon glyphicon-heart"> Favorite</span></a></li>
-
-                    </ul>
-                    <ul>
-                        <li><h4><a href="#">Doug Moreland</a> <a href="#">@LessLand</a></h4>
-                        </li>
-
-                        <li><p><a href="#">Franklin University</a> now offering HUMN102 - Underwater
-                            Basket Weaving <a href="#" class="hashtag">#HumanitiesWithPurpose</a></li>
-
-                        <li><a href="#"><span
-                            class="glyphicon glyphicon-eye-open"> View</span></a><a href="#"> <span
-                            class="glyphicon glyphicon-share-alt"> Reply</span></a><a href="#"> <span
-                            class="glyphicon glyphicon-retweet"> Retwic</span></a><a
-                            href="#"> <span
-                            class="glyphicon glyphicon-heart"> Favorite</span></a></li>
-
-                    </ul>
-                    <ul>
-                        <li><h4><a href="#">Random Buckeye Hater</a> <a href="#">@BuckeyeHater</a></h4>
-                        </li>
-
-                        <li><p>Da Suckeyes suxxors and will get pwned by the Iowa Hawkees <a href="#"
-                                                                                             class="hashtag">#BlindHatred</a>
-                            <a href="#" class="hashtag">#Jealousy</a></p></li>
-
-                        <li><a href="#"><span
-                            class="glyphicon glyphicon-eye-open"> View</span></a><a href="#"> <span
-                            class="glyphicon glyphicon-share-alt"> Reply</span></a><a href="#"> <span
-                            class="glyphicon glyphicon-retweet"> Retwic</span></a><a
-                            href="#"> <span
-                            class="glyphicon glyphicon-heart"> Favorite</span></a></li>
-
-                    </ul>
                     <div><a href="#">More</a></div>
 
                 </div>

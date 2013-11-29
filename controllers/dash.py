@@ -20,15 +20,17 @@ def dash(app):
     if request.method == 'GET':
         if session.has_key('user'):
             dbh = MessageHelper(StrictRedis())
-            messages = dbh.get_user_messages(session['user']['id'])
-            message = Message(6, 'This is a message to check if it gets rendered in the dash.')
-            messages.append(message)
+            dbh_user = UserHelper(StrictRedis())
+            backward = dbh.get_user_messages(session['user']['id'])
+            messages = reversed(backward)
+            #users = list()
+            #for message in messages:
+                #user = dbh_user.get_user_by_id(message.user_id)
+                #users.append(user)
+                #message.user_id = user
             return render_template('dash.html', error=None, title='Twic Dashboard', messages=messages)
         else:
             return render_template('login.html', error='Please log in', title='Login')
     elif request.method == 'POST':
         error = list()
-        dbh = UserHelper(StrictRedis())
-        dbh.add_user(user)
-        session['user'] = user.__str__()
-        return render_template('registration.html', title='Twic Registration')
+
