@@ -37,7 +37,7 @@ if __name__ == "__main__":
     import logging
 
     logging.getLogger().setLevel(logging.DEBUG)
-
+    app.debug = True
     flask_app = WSGIContainer(app)
 
     AsyncRouter = SockJSRouter(AsyncConnection, '/async',)

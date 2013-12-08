@@ -42,8 +42,7 @@ class Message(object):
     URL_KEY = 'urls'
     MSG_TOKENS = 'tokens'
 
-    def __init__(self, user_id, message, recipients=set(), urls=list(), hashtags=list(), replies=list(),
-                 favorited=set(), retweeted=set()):
+    def __init__(self, user_id, message, posted_time=0, recipients=set(), urls=list(), hashtags=list(), replies=list(), favorited=set(), retweeted=set()):
         self._values = dict()
         self._values[self.MSG_ID_KEY] = None
         self._values[self.USER_ID_KEY] = user_id
@@ -58,8 +57,10 @@ class Message(object):
             self.recipients = parsr.recipients
             self.tokens = parsr._msg_values
 
-        self._values[self.MSG_KEY] = message
         self._values[self.POST_KEY] = int(math.ceil(time.time()))
+
+        self._values[self.MSG_KEY] = message
+
 
         self.replies = replies
         self.favorited = favorited
@@ -98,7 +99,7 @@ class Message(object):
         @return: time it was posted in seconds (unix timestamp)
         @rtype: int
         """
-        return self._values[self.POST_KEY]
+        return int(self._values[self.POST_KEY])
 
     @property
     def formatted_time(self):
@@ -107,7 +108,8 @@ class Message(object):
         @return: A string formatted to display to a user
         @rtype: str
         """
-        posted_seconds = timedelta(seconds=int(self.posted_time - time.time()))
+        dt = int(time.time() - self.posted_time)
+        posted_seconds = timedelta(seconds=dt)
         time_posted = datetime(1, 1, 1) + posted_seconds
 
         # note that day and year add one more than they should (thus we do > 1 and not > 0)
@@ -117,6 +119,7 @@ class Message(object):
             return datetime.strftime(date.fromtimestamp(self.posted_time), '%-d %b')
         if time_posted.hour > 0:
             return '%dh %dm' % (time_posted.hour, time_posted.minute)
+
         return '%dm' % time_posted.minute
 
     def items(self):

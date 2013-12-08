@@ -27,11 +27,16 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="input-group">
-                    <form action="{{ url_for('add_message') }}" method="post">
-                        <textarea placeholder="Compose Twic" class="form-control" name="message"></textarea>
-                        <button class="btn btn-primary">POST</button>
-                    </form>
-
+                    <noscript>
+                        <form action="{{ url_for('add_message') }}" method="post">
+                    </noscript>
+                    <textarea placeholder="Compose Twic" id="twit-msg" class="form-control"
+                              name="message"></textarea>
+                    <input id="user_id" type="hidden" value="{{ session['user']['id'] }}"/>
+                    <button id="post-msg-btn" class="btn btn-primary">POST</button>
+                    <noscript>
+                        </form>
+                    </noscript>
                 </div>
             </div>
         </div>
@@ -57,11 +62,11 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading"><h4>Twics</h4></div>
-                <div class="panel-body">
+                <div id="msg-area" class="panel-body">
                 {% if messages %}
                     {% for message in messages %}
                         <ul>
-                            <li><h4><a href="#">{{ message.user_id }}</a> <a href="#">{{ message.user_id }}</a></h4></li>
+                            <li><h4><a href="{{ url_for('dash') }}/user_id/{{ message.user_id }}/msg_id/{{ message.id }}#{{ message.posted_time }}">{{ message.formatted_time }}</a></h4></li>
                             <li><p>{{ message.message }}</p></li>
                             <li>
                                 <a href="#"><span class="glyphicon glyphicon-eye-open"> View</span></a>

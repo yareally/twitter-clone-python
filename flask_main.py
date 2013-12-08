@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, jsonify, url_for, redirect
 import os
 from redis import StrictRedis
 from controllers.register import register as reg_controller
 from controllers.login import login as login_controller
 from controllers.dash import dash as dash_controller
 from controllers.add_message import add_message as add_message_controller
+from libs.rediswrapper import MessageHelper
+from models.message import Message
 
 app = Flask(__name__)
 app.secret_key = '\x1c\xba\x97jT\xf1\xdb\x92S\xd7\x83\x0f{\xa3#\xf3\x9fg\xf3;\x96D\x01\x98'

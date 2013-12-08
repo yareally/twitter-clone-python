@@ -461,7 +461,7 @@ class MessageHelper(RedisBase):
         @param end_range: by default, gets up to the last message ever posted
         @type end_range: int
         @return: all messages within the given range for a user
-        @rtype: list
+        @rtype: Message
         """
 
         msg_ids = self.redis.lrange(
@@ -476,7 +476,14 @@ class MessageHelper(RedisBase):
                 trans.hgetall(self.__set_msg_string(msg_id))
 
             messages = trans.execute()
-        return messages
+
+        msg_list = []
+
+        for msg in messages:
+            next_msg = Message(0, '')
+            next_msg._values = msg
+            msg_list.append(next_msg)
+        return msg_list
 
     def __set_msg_string(self, first_key=None, second_key=None):
         """
