@@ -1,3 +1,5 @@
+# coding=utf-8
+__author__ = 'wes'
 import math
 import time
 from datetime import date, timedelta, datetime
@@ -9,6 +11,7 @@ try:
     import cPickle as pickle
 except ImportError:
     import pickle
+
 
 class Message(object):
     """
@@ -40,31 +43,54 @@ class Message(object):
     HT_KEY = 'hashtags'
     RECIP_KEY = 'recipients'
     URL_KEY = 'urls'
-    MSG_TOKENS = 'tokens'
+    MSG_TOKENS_KEY = 'tokens'
+    # message with the tokens removed and placeholders inserted
+    PARSED_MSG_KEY = 'parsed_msg'
+    FMT_MSG_KEY = 'fmt_msg'
 
-    def __init__(self, user_id, message, posted_time=0, recipients=set(), urls=list(), hashtags=list(), replies=list(), favorited=set(), retweeted=set()):
+    def __init__(self, user_id, message, posted_time=0, recipients=set(), urls=set(), hashtags=set(), replies=set(), favorited=set(), retweeted=set()):
         self._values = dict()
+        # holds sets, dicts, etc
+        self._cplx_values = dict()
         self._values[self.MSG_ID_KEY] = None
         self._values[self.USER_ID_KEY] = user_id
-        self.recipients = recipients
-        self.hashtags = hashtags
-        self.urls = urls
 
         if not urls and not hashtags and not recipients:
             parsr = Parser(message)
-            self.urls = parsr.urls
-            self.hashtags = parsr.hashtags
-            self.recipients = parsr.recipients
-            self.tokens = parsr._msg_values
+
+            self._cplx_values[self.URL_KEY] = parsr.urls
+            self._cplx_values[self.FMT_MSG_KEY] = parsr.formatted_msg
+            self._cplx_values[self.HT_KEY] = parsr.hashtags
+            self._cplx_values[self.RECIP_KEY] = parsr.recipients
+            self._cplx_values[self.MSG_TOKENS_KEY] = parsr._msg_values
+            self._cplx_values[self.PARSED_MSG_KEY] = parsr._parsed_message
+        else:
+            # formtted_url = set()
+            # formatted_hts = set()
+            # formatted_recip = set()
+            #
+            # for url in urls:
+            #     formtted_url += self.__URL_HTML % url
+            # urls = formtted_url
+            #
+            # for ht in hashtags:
+            #     formatted_hts += self.__HT_HTML % ht
+            # hashtags = formatted_hts
+            #
+            # for user in recipients:
+            #     formatted_recip += self.__USER_HTML % user
+            # recipients = formatted_recip
+            self._cplx_values[self.URL_KEY] = urls
+            self._cplx_values[self.HT_KEY] = hashtags
+            self._cplx_values[self.RECIP_KEY] = recipients
 
         self._values[self.POST_KEY] = int(math.ceil(time.time()))
 
         self._values[self.MSG_KEY] = message
 
-
-        self.replies = replies
-        self.favorited = favorited
-        self.retweeted = retweeted
+        self._cplx_values[self.REPLY_KEY] = replies
+        self._cplx_values[self.FAV_KEY] = favorited
+        self._cplx_values[self.RT_KEY] = retweeted
 
 
     @property
@@ -86,11 +112,75 @@ class Message(object):
 
     @property
     def user_id(self):
+        """
+
+
+        @return: @rtype:
+        """
         return self._values[self.USER_ID_KEY]
 
     @property
     def message(self):
+        """
+
+
+        @return: @rtype:
+        """
         return self._values[self.MSG_KEY]
+
+    @property
+    def formatted_msg(self):
+        """
+
+
+        @return: @rtype:
+        """
+        return self._cplx_values[self.FMT_MSG_KEY]
+
+    @property
+    def hashtags(self):
+        """
+
+
+        @return: @rtype:
+        """
+        return self._cplx_values[self.HT_KEY]
+
+    @property
+    def urls(self):
+        """
+
+
+        @return: @rtype:
+        """
+        return self._cplx_values[self.URL_KEY]
+
+    @property
+    def recipients(self):
+        """
+
+
+        @return: @rtype:
+        """
+        return self._cplx_values[self.RECIP_KEY]
+
+    @property
+    def tokens(self):
+        """
+
+
+        @return: @rtype:
+        """
+        return self._cplx_values[self.MSG_TOKENS_KEY]
+
+    @property
+    def parsed_msg(self):
+        """
+
+
+        @return: @rtype:
+        """
+        return self._cplx_values[self.PARSED_MSG_KEY]
 
     @property
     def posted_time(self):
@@ -130,7 +220,20 @@ class Message(object):
         return self._values.items()
 
     def get_dict(self):
+        """
+
+
+        @return: @rtype:
+        """
         return self._values
+
+    def get_complx_dict(self):
+        """
+
+
+        @return: @rtype:
+        """
+        return self._cplx_values
 
     @staticmethod
     def load_message(pickled_msg):

@@ -1,8 +1,10 @@
+from __future__ import print_function
 # coding=utf-8
-__author__ = 'admin'
+__author__ = 'wes'
 
 import unittest
 from libs.parser import Parser
+
 
 class ParseTests(unittest.TestCase):
     def test_message_parse(self):
@@ -12,6 +14,11 @@ class ParseTests(unittest.TestCase):
         print(parse.hashtags)
         print(parse.recipients)
         print(parse.message)
+
+        print(parse._msg_values)
+        print(parse._parsed_message)
+        print(parse._value_lookup)
+
         parse = Parser(
             '@tflemings this twitter clone is awful #TwicSuck #awful')
         print(parse.urls)
@@ -24,7 +31,8 @@ class ParseTests(unittest.TestCase):
         print(parse.hashtags)
         print(parse.recipients)
         print(parse.message)
-
+        print("finally")
+        print(parse.formatted_msg)
 
 if __name__ == '__main__':
     unittest.main()

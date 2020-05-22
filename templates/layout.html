@@ -46,7 +46,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        {% block logout %}{% endblock %}
+
                         {% if not session.logged_in %}
                             <a href="{{ url_for('login') }}">
                             Login
@@ -55,7 +55,7 @@
                             Logout
                         {% endif %}
                     </a></li>
-                    <li>{% block user %}{% endblock %}
+                    <li>
                         {% if not session.logged_in %}
                             <a href="{{ url_for('registration') }}">
                             Register
@@ -96,7 +96,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/holder.js') }}"></script>
-<script src="{{ url_for('static', filename='js/site.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dash.js') }}"></script>
 
 </body>
 </html>

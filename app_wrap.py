@@ -1,5 +1,6 @@
+# coding=utf-8
+__author__ = 'wes'
 from redis import StrictRedis
-import sockjs.tornado
 from sockjs.tornado import SockJSRouter
 import tornado.web
 from libs.session import RedisSessionStore, Session

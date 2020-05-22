@@ -1,12 +1,10 @@
-
+/*global $*/
 $('#post-msg-btn').click(function() {
     "use strict";
 
 
     var message = $('#twit-msg').val();
     var userId = $('input#user_id').val();
-
-
 
 
     var request = $.ajax({
@@ -23,12 +21,17 @@ $('#post-msg-btn').click(function() {
         var timestamp = msg.post_time;
         var formattedTime = msg.format_time;
         var msgId = msg.msg_id;
+        var msgCount = msg.msg_count;
 
         $('div#msg-area ul li:first').animate({
 
-        }, function(){
+        }, function() {
+            $('#tweet-count').fadeOut(function() {
+                $(this).text(msgCount + "\n Twics");
+            }).fadeIn();
+
             $(this).css('padding-top', '0px');
-            $(this).parent().prepend($('<ul><li>' +
+            $(this).parent().parent().prepend($('<ul><li>' +
                 '<h4>' +
                 '<a href="/dash/user_id/' + userId + '/msg_id/' + msgId + timestamp + '">' +
                 formattedTime + '<\/a>' +

@@ -1,0 +1,1248 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>www.libs.rediswrapper.UserHelper</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;www ::
+        <a href="www.libs-module.html">Package&nbsp;libs</a> ::
+        <a href="www.libs.rediswrapper-module.html">Module&nbsp;rediswrapper</a> ::
+        Class&nbsp;UserHelper
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="www.libs.rediswrapper.UserHelper-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class UserHelper</h1><p class="nomargin-top"><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+    
+         |    
+ <a href="www.libs.rediswrapper.RedisBase-class.html">RedisBase</a> --+
+             |
+            <strong class="uidshort">UserHelper</strong>
+</pre>
+
+<hr />
+<p>Handles user queries to redis</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">redis_connection</span>,
+        <span class="summary-sig-arg">user_id</span>=<span class="summary-sig-default">None</span>)</span><br />
+      x.__init__(...) initializes x; see help(type(x)) for signature</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#add_user" class="summary-sig-name">add_user</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">twit_user</span>)</span><br />
+      Returns:
+      the user id of the inserted user or None if errors @rtype int</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.add_user">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">bool</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#add_item" class="summary-sig-name">add_item</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">table</span>,
+        <span class="summary-sig-arg">key</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Add a new item to the given hashtable.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.add_item">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">User</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#get_user_by_id" class="summary-sig-name">get_user_by_id</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">user_id</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns:
+      or None if not found</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.get_user_by_id">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">User</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#get_user_by_email" class="summary-sig-name">get_user_by_email</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">email</span>)</span><br />
+      Returns:
+      the queried user object or None if not found</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.get_user_by_email">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">dict</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#get_all_usernames" class="summary-sig-name">get_all_usernames</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns:
+      dictionary of all users</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.get_all_usernames">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">list</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#fuzzy_username_search" class="summary-sig-name">fuzzy_username_search</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">prefix</span>)</span><br />
+      Does a search for partial usernames (first letter at least has to be 
+      correct)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.fuzzy_username_search">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">User</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#get_user_by_username" class="summary-sig-name">get_user_by_username</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">username</span>)</span><br />
+      Returns:
+      The queried user object or None if not found</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.get_user_by_username">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">str</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#get_user_token" class="summary-sig-name">get_user_token</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">user_id</span>=<span class="summary-sig-default">None</span>)</span><br />
+      If one exists, gets the temp user token used for web sockets and 
+      other sessionless means of communication</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.get_user_token">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">bool</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#user_id_exists" class="summary-sig-name">user_id_exists</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">user_id</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns:
+      True if the user_id exists in the db</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.user_id_exists">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">bool</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#email_exists" class="summary-sig-name">email_exists</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">email</span>)</span><br />
+      Returns:
+      True if the email exists in the db</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.email_exists">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">bool</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#username_exists" class="summary-sig-name">username_exists</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">username</span>)</span><br />
+      Returns:
+      True if the username exists in the db</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.username_exists">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#delete_user" class="summary-sig-name">delete_user</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">user_id</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">email</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">username</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.delete_user">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#add_follower" class="summary-sig-name">add_follower</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">follower_id</span>,
+        <span class="summary-sig-arg">user_id</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds a follower to a user.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.add_follower">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">set</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#get_follower_ids" class="summary-sig-name">get_follower_ids</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">user_id</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Fetches a set of all follower user ids for a user</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.get_follower_ids">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#add_following" class="summary-sig-name">add_following</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">follow_id</span>,
+        <span class="summary-sig-arg">user_id</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds a user to follow to the current user</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.add_following">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">list</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#get_post_id_range" class="summary-sig-name">get_post_id_range</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">start_post_id</span>,
+        <span class="summary-sig-arg">end_post_id</span>,
+        <span class="summary-sig-arg">user_id</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Gets the user post ids within a range</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.get_post_id_range">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">bool</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#__user_property_exists" class="summary-sig-name" onclick="show_private();">__user_property_exists</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">first_key</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.__user_property_exists">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">str</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#__set_user_string" class="summary-sig-name" onclick="show_private();">__set_user_string</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">first_key</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns:
+      The previous entry for the key being set or None if no previous entry
+      exists</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.__set_user_string">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#__next_user_id" class="summary-sig-name" onclick="show_private();">__next_user_id</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get the next user id from the db</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.__next_user_id">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="www.libs.rediswrapper.RedisBase-class.html">RedisBase</a></code></b> (private):
+      <code><a href="www.libs.rediswrapper.RedisBase-class.html#_add_fuzzy_matches" onclick="show_private();">_add_fuzzy_matches</a></code>,
+      <code><a href="www.libs.rediswrapper.RedisBase-class.html#_fuzzy_search_rank" onclick="show_private();">_fuzzy_search_rank</a></code>,
+      <code><a href="www.libs.rediswrapper.RedisBase-class.html#_lock_with_timeout" onclick="show_private();">_lock_with_timeout</a></code>,
+      <code><a href="www.libs.rediswrapper.RedisBase-class.html#_release_lock" onclick="show_private();">_release_lock</a></code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Static Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-StaticMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">str</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#hash_password" class="summary-sig-name">hash_password</a>(<span class="summary-sig-arg">password</span>,
+        <span class="summary-sig-arg">salt</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Returns:
+      the hashed password</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.hash_password">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">int</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="www.libs.rediswrapper.UserHelper-class.html#generate_salt" class="summary-sig-name">generate_salt</a>(<span class="summary-sig-arg">length</span>=<span class="summary-sig-default">24</span>)</span><br />
+      Returns:
+      the random salt string</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.generate_salt">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="www.libs.rediswrapper.RedisBase-class.html">RedisBase</a></code></b> (private):
+      <code><a href="www.libs.rediswrapper.RedisBase-class.html#_set_key_string" onclick="show_private();">_set_key_string</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__NEXT_USER_KEY"></a><span class="summary-name">__NEXT_USER_KEY</span> = <code title="'next.user.id'"><code class="variable-quote">'</code><code class="variable-string">next.user.id</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_QUERY_STRING"></a><span class="summary-name">_QUERY_STRING</span> = <code title="'user'"><code class="variable-quote">'</code><code class="variable-string">user</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">redis_connection</span>,
+        <span class="sig-arg">user_id</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>x.__init__(...) initializes x; see help(type(x)) for signature</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>redis_connection</code></strong> (StrictRedis)</li>
+        <li><strong class="pname"><code>user_id</code></strong> (int) - if not empty, assumed the user exists already</li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_user"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_user</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">twit_user</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.add_user">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>twit_user</code></strong> (User)</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the user id of the inserted user or None if errors @rtype int</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_item"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_item</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">table</span>,
+        <span class="sig-arg">key</span>,
+        <span class="sig-arg">value</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.add_item">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add a new item to the given hashtable.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>table</code></strong> (str) - The name of the hash table.</li>
+        <li><strong class="pname"><code>key</code></strong> (str) - The lookup key for the value</li>
+        <li><strong class="pname"><code>value</code></strong> (str) - The value to store in the hashtable</li>
+    </ul></dd>
+    <dt>Returns: bool</dt>
+        <dd>true if added</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_user_by_id"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_user_by_id</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">user_id</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.get_user_by_id">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>user_id</code></strong> (int)</li>
+    </ul></dd>
+    <dt>Returns: User</dt>
+        <dd>or None if not found</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_user_by_email"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_user_by_email</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">email</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.get_user_by_email">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>email</code></strong> (str)</li>
+    </ul></dd>
+    <dt>Returns: User</dt>
+        <dd>the queried user object or None if not found</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_all_usernames"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_all_usernames</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.get_all_usernames">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Returns: dict</dt>
+        <dd>dictionary of all users</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="fuzzy_username_search"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fuzzy_username_search</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">prefix</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.fuzzy_username_search">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Does a search for partial usernames (first letter at least has to be 
+  correct)</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>prefix</code></strong> (str) - partial match</li>
+    </ul></dd>
+    <dt>Returns: list</dt>
+        <dd>possible matches</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_user_by_username"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_user_by_username</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">username</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.get_user_by_username">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>username</code></strong> (str)</li>
+    </ul></dd>
+    <dt>Returns: User</dt>
+        <dd>The queried user object or None if not found</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_user_token"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_user_token</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">user_id</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.get_user_token">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>If one exists, gets the temp user token used for web sockets and other
+  sessionless means of communication</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>user_id</code></strong> (int) - the user id</li>
+    </ul></dd>
+    <dt>Returns: str</dt>
+        <dd>the token, if there is one (None otherwise)</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="user_id_exists"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">user_id_exists</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">user_id</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.user_id_exists">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>user_id</code></strong> (int)</li>
+    </ul></dd>
+    <dt>Returns: bool</dt>
+        <dd>True if the user_id exists in the db</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="email_exists"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">email_exists</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">email</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.email_exists">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>email</code></strong> (str)</li>
+    </ul></dd>
+    <dt>Returns: bool</dt>
+        <dd>True if the email exists in the db</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="username_exists"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">username_exists</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">username</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.username_exists">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>username</code></strong> (str)</li>
+    </ul></dd>
+    <dt>Returns: bool</dt>
+        <dd>True if the username exists in the db</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="delete_user"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">delete_user</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">user_id</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">email</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">username</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.delete_user">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>user_id</code></strong> (int)</li>
+        <li><strong class="pname"><code>email</code></strong> (str)</li>
+        <li><strong class="pname"><code>username</code></strong> (str @return redis bound result from deletion)</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_follower"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_follower</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">follower_id</span>,
+        <span class="sig-arg">user_id</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.add_follower">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a follower to a user.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>follower_id</code></strong> (int) - The user id of the follower to add to this user</li>
+        <li><strong class="pname"><code>user_id</code></strong> (int) - The user id to add the follower to</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_follower_ids"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_follower_ids</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">user_id</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.get_follower_ids">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Fetches a set of all follower user ids for a user</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>user_id</code></strong> (int) - user whose follower ids should be queried</li>
+    </ul></dd>
+    <dt>Returns: set</dt>
+        <dd>set of all follower ids for the user</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_following"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_following</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">follow_id</span>,
+        <span class="sig-arg">user_id</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.add_following">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a user to follow to the current user</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>follow_id</code></strong> (int) - The user id of the person to follow</li>
+        <li><strong class="pname"><code>user_id</code></strong> (int) - The user id of the person wanting to follow someone</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_post_id_range"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_post_id_range</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">start_post_id</span>,
+        <span class="sig-arg">end_post_id</span>,
+        <span class="sig-arg">user_id</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.get_post_id_range">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets the user post ids within a range</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>start_post_id</code></strong></li>
+        <li><strong class="pname"><code>end_post_id</code></strong></li>
+        <li><strong class="pname"><code>user_id</code></strong> (int) - user id to get post ids from</li>
+    </ul></dd>
+    <dt>Returns: list</dt>
+        <dd>list of all user posts within the start/end range</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="hash_password"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">hash_password</span>(<span class="sig-arg">password</span>,
+        <span class="sig-arg">salt</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+    <br /><em class="fname">Static Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.hash_password">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>password</code></strong> (str) - plaintext password to be hashed</li>
+        <li><strong class="pname"><code>salt</code></strong> (str) - random characters to be added with the hashed password</li>
+    </ul></dd>
+    <dt>Returns: str</dt>
+        <dd>the hashed password</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="generate_salt"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">generate_salt</span>(<span class="sig-arg">length</span>=<span class="sig-default">24</span>)</span>
+    <br /><em class="fname">Static Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.generate_salt">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>length</code></strong> (int) - Length of the salt</li>
+    </ul></dd>
+    <dt>Returns: int</dt>
+        <dd>the random salt string</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__user_property_exists"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__user_property_exists</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">first_key</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.__user_property_exists">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>first_key</code></strong> (str) - Name of the stored key to check against in redis</li>
+    </ul></dd>
+    <dt>Returns: bool</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__set_user_string"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__set_user_string</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">first_key</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.__set_user_string">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>first_key</code></strong> (str, int)</li>
+    </ul></dd>
+    <dt>Returns: str</dt>
+        <dd>The previous entry for the key being set or None if no previous 
+          entry exists</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__next_user_id"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__next_user_id</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="www.libs.rediswrapper-pysrc.html#UserHelper.__next_user_id">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get the next user id from the db</p>
+  <p>@rtype : int</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Dec 15 19:17:25 2013
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

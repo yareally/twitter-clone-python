@@ -1,4 +1,6 @@
+from __future__ import print_function
 # coding=utf-8
+__author__ = 'wes'
 import unittest
 import redis
 from models.message import Message
@@ -15,7 +17,8 @@ class RedisTests(unittest.TestCase):
     redis = redis.StrictRedis()
     dbh = UserHelper(redis)
     dbhm = MessageHelper(redis)
-    user = User('a-user', 'email@whatever.com', 'plain-text-pass', 'Jon Smith')
+    user = User('jsmith123', 'email@whatever.com', 'plain-text-pass', 'Jon Smith')
+
     def setUp(self):
         pass
 
@@ -44,7 +47,9 @@ class RedisTests(unittest.TestCase):
        # self.assertEqual(self.user.following, stored_self.user.following)
       #  self.assertEqual(self.user.messages, stored_self.user.messages)
 
-       # passwd = UserHelper.hash_password(self.user.password, stored_self.user.salt)
+        search_results = self.dbh.fuzzy_username_search(self.user.username[:-3])
+        print(search_results)
+        self.assertTrue(len(search_results) > 0)
         self.assertEqual(self.user.password, stored_user.password)
 
     def test_add_message(self):

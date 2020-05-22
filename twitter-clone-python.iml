@@ -3,7 +3,7 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Remote Python 2.7.5+(ssh://root@192.168.1.212:57050/root/python-projects/virtualenv/twitter-clone/bin/python)" jdkType="Python SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="sockjs-0.3.4" level="application" />
     <orderEntry type="library" name="jquery-2.0.3.min" level="project" />

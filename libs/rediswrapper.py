@@ -95,6 +95,65 @@ class RedisBase(object):
                     # lock was lost
         return False
 
+    def _add_fuzzy_matches(self, key, value, trans):
+        """
+        Adds the value broken down into 1st letter, 1st + 2nd, 1st + 2nd + ...
+        Should not be called directly, only used in another method adding a user
+        @param key: Key to store/lookup the possible search fuzzy value
+        @type key: str
+        @param value: value to store as fuzzy matches
+        @type value: str
+        @param trans: the transaction the user is being added to currently
+        @type trans: StrictPipeline
+        @return: the transaction as it's not likely finished yet
+        @rtype StrictPipeline
+        """
+        prefix = ''
+
+        for char in value[0:-1]:
+            prefix += char
+            trans.zadd(key + ':search', 0, prefix)
+
+        trans.zadd(key + ':search', 0, value + '*')
+        return trans
+
+    def _fuzzy_search_rank(self, key, prefix):
+        """
+
+        @param key:
+        @type key: str
+        @param prefix:
+        @type prefix: str
+        @return search results if there's a match or empty list if none
+        @rtype list
+        """
+        results = []
+        rangelen = 50
+        count = 50
+        start = self.redis.zrank(key + ':search', prefix)
+
+        if not start:
+            return []
+
+        while len(results) != count:
+            search_range = self.redis.zrange(key + ':search', start, start + rangelen - 1)
+            start += rangelen
+
+            if not search_range or len(search_range) == 0:
+                break
+
+            for entry in search_range:
+                minlen = min([len(entry), len(prefix)])
+
+                if entry[0:minlen - 1] != prefix[0:minlen - 1]:
+                    count = len(results)
+                    break
+
+                if entry[-1] == '*' and len(results) != count:
+                    results.append(entry[0:-1])
+        return results
+
+
 class UserHelper(RedisBase):
     """
     Handles user queries to redis
@@ -137,8 +196,12 @@ class UserHelper(RedisBase):
 
         twit_user.id = self.user_id
 
+        redis = StrictRedis()
+        redis.hset('hash-table-name', 'some-key', 'some-value')
         with self.redis.pipeline() as trans:
             trans.hset(self._QUERY_STRING, twit_user.username, twit_user.id)
+            trans = self._add_fuzzy_matches(User.USERNAME_KEY, twit_user.username, trans)
+            trans = self._add_fuzzy_matches(User.NAME_KEY, twit_user.name, trans)
             trans.hset(self._QUERY_STRING, twit_user.email, twit_user.id)
             trans.hmset(self.__set_user_string(twit_user.id), twit_user.get_dict())
             result = trans.execute()
@@ -146,7 +209,23 @@ class UserHelper(RedisBase):
             self._release_lock(email_lock, email_lock_id)
         return twit_user.id if result else None
 
-    # TODO: get user by email and get user by username
+    def add_item(self, table, key, value):
+        """
+        Add a new item to the given hashtable.
+
+        @param table: The name of the hash table.
+        @type table: str
+        @param key: The lookup key for the value
+        @type key: str
+        @param value: The value to store in the hashtable
+        @type value: str
+        @return: true if added
+        @rtype: bool
+        """
+        # open a connection to redis
+        redis = StrictRedis()
+        # insert the key and value
+        return redis.hset(table, key, value)
 
     def get_user_by_id(self, user_id=None):
         """
@@ -165,6 +244,7 @@ class UserHelper(RedisBase):
 
         user = User()
         user._values = self.redis.hgetall(self.__set_user_string(str(user_id)))
+        user.msg_count = MessageHelper(self.redis).get_msg_count(user_id)
         return user
 
     def get_user_by_email(self, email):
@@ -178,6 +258,23 @@ class UserHelper(RedisBase):
         user_id = self.redis.hget(self._QUERY_STRING, email)
         return self.get_user_by_id(user_id)
 
+    def get_all_usernames(self):
+        """
+
+        @return: dictionary of all users
+        @rtype: dict
+        """
+        return self.redis.hgetall(self._QUERY_STRING)
+
+    def fuzzy_username_search(self, prefix):
+        """
+        Does a search for partial usernames (first letter at least has to be correct)
+        @param prefix: partial match
+        @type prefix: str
+        @return: possible matches
+        @rtype: list
+        """
+        return self._fuzzy_search_rank(User.USERNAME_KEY, prefix)
 
     def get_user_by_username(self, username):
         """
@@ -190,6 +287,20 @@ class UserHelper(RedisBase):
 
         user_id = self.redis.hget(self._QUERY_STRING, username)
         return self.get_user_by_id(user_id)
+
+    def get_user_token(self, user_id=None):
+        """
+        If one exists, gets the temp user token used for web sockets and
+        other sessionless means of communication
+
+        @param user_id: the user id
+        @type user_id: int
+        @return: the token, if there is one (None otherwise)
+        @rtype: str
+        """
+        if not user_id:
+            user_id = self.user_id
+        return self.redis.hget(self.__set_user_string())
 
     def user_id_exists(self, user_id=None):
         """
@@ -316,6 +427,8 @@ class UserHelper(RedisBase):
     def get_post_id_range(self, start_post_id, end_post_id, user_id=None):
         """
         Gets the user post ids within a range
+        @param start_post_id:
+        @param end_post_id:
         @param user_id: user id to get post ids from
         @type user_id: int
         @return: list of all user posts within the start/end range
@@ -419,6 +532,10 @@ class MessageHelper(RedisBase):
         with self.redis.pipeline() as trans:
             trans.rpush(self._set_key_string('%s:%s' % (UserHelper._QUERY_STRING, msg.user_id), User.POSTS_ID_KEY), msg.id)
             trans.hmset(self.__set_msg_string(msg.id), msg.get_dict())
+            self.redis.sadd(self.__set_msg_string(msg.id, Message.RECIP_KEY), msg.recipients)
+            self.redis.sadd(self.__set_msg_string(msg.id, Message.URL_KEY), msg.urls)
+            self.redis.sadd(self.__set_msg_string(msg.id, Message.HT_KEY), msg.hashtags)
+            self.redis.sadd(self.__set_msg_string(msg.id, Message.MSG_TOKENS_KEY), msg.tokens)
             #trans.hset(self.__set_msg_string(msg.id, Message.FAV_KEY), msg.favorited)
             #trans.hset(self.__set_msg_string(msg.id, Message.RT_KEY), msg.retweeted)
             #trans.hset(self.__set_msg_string(msg.id, Message.REPLY_KEY), msg.replies)
@@ -484,6 +601,18 @@ class MessageHelper(RedisBase):
             next_msg._values = msg
             msg_list.append(next_msg)
         return msg_list
+
+    def get_msg_count(self, user_id):
+        """
+        Gets the total messages posted by a user
+
+        @param user_id: the user's id
+        @type user_id: int
+        @return: the post count
+        @rtype: int
+        """
+        return self.redis.llen(
+            self._set_key_string('%s:%s' % (UserHelper._QUERY_STRING, user_id), User.POSTS_ID_KEY))
 
     def __set_msg_string(self, first_key=None, second_key=None):
         """

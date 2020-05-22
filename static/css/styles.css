@@ -23,7 +23,7 @@ h3 {
 
 h4 {
     font-size: 20px;
-    line-height: 22px;
+    line-height: 24px;
 }
 
 q
@@ -313,6 +313,16 @@ div.thumbnail > a img {
 }
 
 /* dashboard page styles */
+
+#dash textarea {
+    width: 280px;
+    height: 130px;
+    margin-bottom: 5px;
+}
+
+#dash button {
+    white-space: normal;
+}
 
 #dash div.row {
     margin-left: auto;

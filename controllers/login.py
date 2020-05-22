@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import request, render_template, session, redirect, url_for
 from redis import StrictRedis
 from libs.rediswrapper import UserHelper
@@ -12,7 +13,8 @@ def login(app):
     """
     if request.method == 'GET':
         return render_template('login.html', error=None, title='Twic Login')
-    elif request.method == 'POST':
+
+    if request.method == 'POST':
         error = list()
         name = request.form['name']
         password = request.form['password']
@@ -29,10 +31,12 @@ def login(app):
         dbh = UserHelper(redis)
         email_validator = lepl.apps.rfc3696.Email()
         valid = email_validator(name)
+
         if email_validator(name) and dbh.email_exists(name):
             user = dbh.get_user_by_email(request.form['name'])
         elif dbh.username_exists(name):
             user = dbh.get_user_by_username(request.form['name'])
+
         if user:
             hashed_password = UserHelper.hash_password(password, user.salt)
             if hashed_password == user.password:
@@ -40,7 +44,6 @@ def login(app):
                 session['user'] = user.get_dict()
                 session['logged_in'] = True
                 return redirect(url_for('dash'))
-
         else:
             error.append('That user does not exist.')
 

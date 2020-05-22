@@ -3,6 +3,8 @@ from operator import xor
 import os
 import scrypt
 import time
+from libs.rediswrapper import UserHelper
+
 
 try:
     xrange
@@ -24,7 +26,7 @@ class Token(object):
     __I_SALT = os.urandom(16).encode('base_64')
     __O_SALT = os.urandom(16).encode('base_64')
 
-    def __init__(self, user_id, password = None):
+    def __init__(self, user_id, password=None):
 
         self.user_id = user_id
         # get or create some password to encrypt the user verification token
@@ -33,7 +35,6 @@ class Token(object):
         if not self.password:
             salt = os.urandom(16).encode('base_64')
             self.password = scrypt.hash(os.urandom(24).encode('base_64'), salt)
-
 
     def generate_token(self):
         """
@@ -61,7 +62,7 @@ class Token(object):
             salt = os.urandom(16).encode('base_64')
             key = scrypt.hash(key, salt)
 
-        key +=  chr(0) * (self.__BLOCK_SIZE - len(key))
+        key += chr(0) * (self.__BLOCK_SIZE - len(key))
         o_key_pad = xor(self.__TRANS_5C, key)
         i_key_pad = xor(self.__TRANS_36, key)
 
@@ -94,3 +95,31 @@ class Token(object):
             return False
 
         return True
+
+class RedisToken(Token):
+    """
+
+    @param user_id:
+    @type user_id: int
+    @param redis_connection:
+    @type redis_connection: StrictRedis
+    @param password:
+    @type password: str
+    """
+
+    def __init__(self, user_id, redis_connection, password=None):
+        """
+
+            @param user_id:
+            @type user_id: int
+            @param redis_connection
+            @type redis_connection: StrictRedis
+            @param password:
+            @type password: str
+            @return:
+            @rtype:
+            """
+        # get or create some password to encrypt the user verification token
+        self.redis = UserHelper(redis_connection, user_id)
+        self.password = password if password else self.redis.get('token_pass')
+        super(RedisToken, self).__init__(user_id, password)

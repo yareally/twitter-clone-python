@@ -15,13 +15,16 @@
         </div>
         <div class="btn-group row">
             <div class="col-xs-4">
-                <button type="button" class="btn btn-success">250<br/>Twics</button>
+                <button type="button" id="tweet-count" class="btn btn-success">{{ user.msg_count }}
+                    Twics</button>
             </div>
             <div class="col-xs-4">
-                <button type="button" class="btn btn-success">101<br/>Followers</button>
+                <button type="button" class="btn btn-success">{{ user.follower_count }}
+                    Followers</button>
             </div>
             <div class="col-xs-4">
-                <button type="button" class="btn btn-success">1200<br/>Following</button>
+                <button type="button" class="btn btn-success">{{ user.following_count }}
+                    Following</button>
             </div>
         </div>
         <div class="row">
@@ -63,7 +66,19 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><h4>Twics</h4></div>
                 <div id="msg-area" class="panel-body">
-                {% if messages %}
+                {% if search_results %}
+                    {% for result in search_results %}
+                        <ul>
+                            <li><h4><a
+                                href="{{ url_for('dash') }}/user_id/{{ result.user_id }}">@{{ result.username + ' ' + result.name }}</a>
+                            </h4></li>
+                            <li>
+                                <button id="post-msg-btn" class="btn btn-primary">Profile</button>
+                                <button id="post-msg-btn" class="btn btn-primary">Follow</button>
+                            </li>
+                        </ul>
+                    {% endfor %}
+                {% elif user.msg_count %}
                     {% for message in messages %}
                         <ul>
                             <li><h4><a href="{{ url_for('dash') }}/user_id/{{ message.user_id }}/msg_id/{{ message.id }}#{{ message.posted_time }}">{{ message.formatted_time }}</a></h4></li>
@@ -76,6 +91,8 @@
                             </li>
                         </ul>
                     {% endfor %}
+                {% else %}
+                    <p>You have no Twics. Post something!</p>
                 {% endif %}
                     <div><a href="#">More</a></div>
 

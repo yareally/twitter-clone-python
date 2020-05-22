@@ -1,5 +1,5 @@
 # coding=utf-8
-
+__author__ = 'wes'
 import os
 
 # deal with < Python 3.3 where cPickle was not merged
@@ -28,8 +28,9 @@ class User(object):
     FOLLOWING_ID_KEY = 'following'
     POSTS_ID_KEY = 'posts'
     USER_HOME_URL = 'dash/%s'
+    TOKEN_KEY = 'token'
 
-    def __init__(self, username='', email='', password='', name='', salt=''):
+    def __init__(self, username='', email='', password='', name='', salt='', msg_count=''):
         # import here to avoid circular dependency conflicts
         from libs.rediswrapper import UserHelper
         self._values = dict()
@@ -44,34 +45,65 @@ class User(object):
                                                                                             self._values[
                                                                                                 self.SALT_KEY])
         self._values[self.USER_ID_KEY] = 0
-
+        #self._values[self.TOKEN_KEY] =
         self.followers = set()
         self.following = set()
         self.messages = list()
+        self.msg_count = msg_count
         # self.token = Token()
 
     @property
     def email(self):
+        """
+
+
+        @return: @rtype:
+        """
         return self._values[self.EMAIL_KEY]
 
     @property
     def username(self):
+        """
+
+
+        @return: @rtype:
+        """
         return self._values[self.USERNAME_KEY]
 
     @property
     def password(self):
+        """
+
+
+        @return: @rtype:
+        """
         return str(self._values[self.PASS_KEY])
 
     @property
     def salt(self):
+        """
+
+
+        @return: @rtype:
+        """
         return self._values[self.SALT_KEY]
 
     @property
     def name(self):
+        """
+
+
+        @return: @rtype:
+        """
         return self._values[self.NAME_KEY]
 
     @property
     def id(self):
+        """
+
+
+        @return: @rtype:
+        """
         return self._values[self.USER_ID_KEY]
 
     @id.setter
@@ -82,6 +114,24 @@ class User(object):
         """
         self._values[self.USER_ID_KEY] = value
 
+    @property
+    def follower_count(self):
+        """
+
+
+        @return: @rtype:
+        """
+        return len(self.followers)
+
+    @property
+    def following_count(self):
+        """
+
+
+        @return: @rtype:
+        """
+        return len(self.following)
+
     def items(self):
         """
         @return: dictionary of all properties for the user
@@ -89,7 +139,13 @@ class User(object):
         """
         return self._values.items()
 
+
     def get_dict(self):
+        """
+
+
+        @return: @rtype:
+        """
         return self._values
 
     @staticmethod
